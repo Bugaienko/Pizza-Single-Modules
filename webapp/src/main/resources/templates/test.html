@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Test page</title>
+</head>
+<body>
+<h2>Test page</h2>
+<h3>Ingredients</h3>
+<div th:each="ingr :${ingredients}">
+    <a th:href="@{/ingr/{id}(id=${ingr.id})}"
+        th:text="${ingr.name + ' : ' + ingr.price + ' ( ' + ingr.getType().getName() + ' )' }">text</a>
+    <img th:if="${ingr.image}" th:src="@{images}" class="ingr-image" alt="Post Title"></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<form th:method="POST" th:action="@{/auth/registration}"  th:object="${person}" xmlns="http://www.w3.org/1999/html">
+    <div class="mb-3">
+        <label class="form-label" for="username">Enter username: </label>
+        <input class="form-control" type="text" th:field="*{username}" id="username" placeholder="Username"/>
+        <div class="form-text" style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+            Username Error
+        </div>
+        <div id="usernameHelp2" class="form-text">must not contain special characters; min length is 3 characters</div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="email">Enter your Email: </label>
+        <input class="form-control" type="email" th:field="*{email}" id="email" placeholder="example@mail.com"/>
+        <div class="form-text" style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Year of
+            birth Error
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="password">Enter password: </label>
+        <input class="form-control" type="password" th:field="*{password}" id="password"/>
+        <div class="form-text" style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+            Password Error
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="avatar">Avatar: </label>
+        <input class="form-control" type="file" th:field="*{avatar}" id="avatar" />
+        <div class="form-text" style="color:red" th:if="${#fields.hasErrors('avatar')}" th:errors="*{avatar}">Year of
+            birth Error
+        </div>
+    </div>
+
+    <div class="mb-1 text-center">
+        <input class="ml-3 btn btn-primary" type="submit" value="Sign up!"/>
+        <a th:href="@{/auth/login}" class="ml-3 btn btn-primary" th:text="'Login'"></a>
+    </div>
+</form>

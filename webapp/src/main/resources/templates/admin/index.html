@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Admin page')">Header</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar('admin')"></nav>
+
+<section class="ftco-section" th:style="'background-image: url(/images/bg_4.jpg)'">
+    <div class="container">
+        <div class="row justify-content-center flex-column align-content-center text-center mb-5 pb-3">
+            <h2 class="balu-green">Admin panel</h2>
+            <p class="balu-green large">The page you requested can only be made available to authorized users. Please
+                log in or register</p>
+        </div>
+        <div class="row d-flex flex-row justify-content-center align-content-center mb-5 pb-3">
+            <div class="col-md-4 d-inline-flex flex-column align-content-center text-center">
+                <h3 class="mb-4 text-center">Add</h3>
+                <a th:href="@{/admin/add/ingredient}" class="m-2 btn btn-white btn-outline-white">Add Ingredient</a>
+                <a th:href="@{/admin/add/type_ingredient}" class="m-2 btn btn-white btn-outline-white">Add
+                    TypeIngredient </a>
+                <a th:href="@{/admin/add/base}" class="m-2 btn btn-white btn-outline-white">Add Base</a>
+                <a th:href="@{/admin/add/pizza}" class="m-2 btn btn-white btn-outline-white">Add Pizza</a>
+                <a th:href="@{/admin/add/cafe}" class="m-2 btn btn-white btn-outline-white">Add Cafe</a>
+
+            </div>
+            <div class="col-md-4 d-inline-flex flex-column align-content-center text-center">
+                <h3 class="mb-4 justify-content-center text-center">Edit</h3>
+
+                <a th:href="@{/admin/edit/ingredient}" class="m-2 btn btn-white btn-outline-white">Edit Ingredient</a>
+                <a th:href="@{/admin/edit/type}" class="m-2 btn btn-white btn-outline-white">Edit TypeIngredient</a>
+                <a th:href="@{/admin/base/edit}" class="m-2 btn btn-white btn-outline-white">Edit Base</a>
+                <a th:href="@{/admin/edit/pizza}" class="m-2 btn btn-white btn-outline-white">Edit Pizza</a>
+                <a th:href="@{/admin/edit/cafe}" class="m-2 btn btn-white btn-outline-white">Edit Cafe</a>
+            </div>
+
+        </div>
+
+
+    </div>
+</section>
+
+
+<div th:replace="fragments/footer :: footer('sergiibugaienko@gmail.com')"></div>
+<div th:replace="fragments/loader"></div>
+
+</body>
+</html>
+

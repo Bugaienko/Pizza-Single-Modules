@@ -1,0 +1,36 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-pizza-table
+      author: Bugaienko
+      changes:
+        - createTable:
+            tableName: pizza
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pizza_id
+              - column:
+                  name: name
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal
+              - column:
+                  name: image
+                  type: varchar(200)
+              - column:
+                  name: base_id
+                  type: int
+        - addForeignKeyConstraint:
+            baseTableName: pizza
+            baseColumnNames: base_id
+            referencedTableName: base
+            referencedColumnNames: id
+            onDelete: CASCADE
+            constraintName: pizza_base_id_base_id

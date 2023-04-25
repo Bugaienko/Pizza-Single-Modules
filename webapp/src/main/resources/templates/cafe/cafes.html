@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Cafes')">Header</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar('cafes')"></nav>
+
+<section class="ftco-section" th:style="'background-image: url(/images/food.png)'">
+    <div class="container">
+        <div class="row justify-content-center flex-column align-content-center text-center mb-5 pb-3">
+            <h2 class="balu-black">Our Cafes</h2>
+        </div>
+
+        <div th:style="'background-image: url(/images/bg_4.jpg)'">
+            <div class="row d-flex flex-column justify-content-center align-content-center justify-content-center mt-3">
+                <!--        <div class="col-md-10 justify-content-center p-5">-->
+
+                <div th:each="cafe: ${cafes}" class="col-md-10">
+                    <div class="row flex-nowrap align-content-center mb-3 p-3">
+                        <div class="one-half img"
+                             th:style="${'background-image: url(/images/cafe/'+ cafe.image}+')'"></div>
+                        <div class="one-half ftco-animate ml-5">
+                            <div class="heading-section ftco-animate ">
+                                <h3 class="mb-4">
+                                    Welcome to <span class="flaticon-pizza">Pizza</span>
+                                    <p th:text="${cafe.title}"></p>
+                                </h3>
+                                <div class="text icon">
+                                    <h5>
+                                        <a th:href="${'tel:' + cafe.phone}"
+                                           th:inline="text">
+                                            <span class="icon-phone balu-yellow"></span>
+                                            [[${cafe.phone}]]
+                                        </a>
+                                    </h5>
+                                    <!--                    <h5>-->
+                                    <!--                      <span class="icon-phone balu-yellow"></span>-->
+                                    <!--                      <a th:href="${'tel:' + cafe.phone}"-->
+                                    <!--                         th:text="${cafe.phone}"-->
+                                    <!--                         th:target="_blank">phone</a>-->
+                                    <!--                    </h5>-->
+                                    <p>
+                                        <a th:href="${'mailto:' + cafe.email}"
+                                           th:target="_blank"
+                                           th:inline="text">
+                                            <span class="icon-contact_mail balu-yellow"></span>
+                                            [[${cafe.email}]]
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="text icon">
+                                    <h5 th:inline="text">
+                                        <span class="icon-my_location"></span>
+                                        [[${cafe.city}]]
+                                    </h5>
+                                </div>
+                                <div>
+                                    <p>
+                                        <a th:href="@{/cafe/{id}(id=${cafe.id})}"
+                                           th:text="'View cafe'"
+                                           class="btn btn-white btn-outline-white mt-2 p-3 px-xl-4 py-xl-3">
+                                            View</a>
+                                        <span th:if="${user != null}">
+                                            <a th:if="${#strings.substringAfter(user.role, 'ROLE_') == 'ADMIN'}"
+                                                th:href="@{/pizza/add_to_cafe/{id}(id=${cafe.id})}"
+                                                th:text="'Edit Menu'"
+                                                class="btn btn-white btn-outline-white ml-1 mt-2 p-3 px-xl-4 py-xl-3">
+                                            </a>
+                                        </span>
+
+                                    </p>
+                                </div>
+                            </div>
+                            <div>
+                                <p>We are waiting for you to visit</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--        </div>-->
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    </div>
+</section>
+
+
+<div th:replace="fragments/footer :: footer('sergiibugaienko@gmail.com')"></div>
+<div th:replace="fragments/loader"></div>
+
+</body>
+</html>
+

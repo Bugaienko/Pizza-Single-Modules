@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-base-table
+      author: Bugaienko
+      changes:
+        - createTable:
+            tableName: base
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: base_id
+              - column:
+                  name: size
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: price
+                  type: decimal

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Stack  of technologies')">Header</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar('stack')"></nav>
+
+<section class="ftco-section" th:style="'background-image: url(/images/bg_1.jpg)'">
+    <div class="container">
+        <div class="row justify-content-center flex-column align-content-center text-center mb-5 pb-3">
+            <h2 class="balu-green">About the project and the stack</h2>
+        </div>
+
+        <div th:style="'background-image: url(/images/bg_4.jpg)'">
+            <div class="row d-flex flex-column justify-content-center align-content-center pt-3 mt-3">
+                <div class="project-div ">
+                    <h3 class="mt-4 text-center" th:text="'Project Pizza'"></h3>
+                    <p class="project-about">
+                        Pizza chain website with Rest API.
+                    </p>
+                    <p class="project-about">
+                        Written back-end of the site, web representation and implemented REST API.
+                    </p>
+                    <p class="project-about">
+                        Part of the site is available to all users. More functionality is available only to registered
+                        and
+                        authorized users. Site administrator can modify and add all entities:
+                        Create new pizzas, new ingredients, new cafes, add or remove pizzas to the café menu. Add or
+                        remove
+                        ingredients for a pizza. Check and set pizza prices. The ingredients are differentiated by type
+                        (Vegetables, seafood etc.). The administrator can add and change types. The pizza has different
+                        bases and sizes (thin dough, classic dough, small, large, etc.).
+                    </p>
+                    <h3 class="mt-4 text-center" th:text="'A stack of technologies and tools was used:'"></h3>
+                </div>
+                <div class="col-md-12 d-flex flex-wrap align-content-center justify-content-center py-5 px-4 pl-5">
+
+
+                    <div th:each="item: ${stackItems}" class="col-lg-2 d-flex mb-sm-4 ftco-animate">
+                        <div class="staff balu-grid px-2 py-3">
+                            <div class="img-balu mb-4"
+                                 th:style="${'background-image: url(/images/stack/'+ item.image }+')'">
+                            </div>
+                            <div class="info text-center">
+                                <h3>
+                                    <a th:text="${item.name}"></a>
+                                </h3>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--                    Face 2 for cards-->
+                    <!--                    <div class="col-lg-3 d-flex mb-sm-4 ftco-animate">-->
+                    <!--                        <div class="staff balu-grid px-2 py-3">-->
+                    <!--                            <div class="img-balu mb-4"-->
+                    <!--                                 th:style="${'background-image: url(/images/stack/maven.jpg)'}">-->
+                    <!--                            </div>-->
+
+                    <!--                            <div class="d-block flex-grow-1 text-center">-->
+                    <!--                                &lt;!&ndash;                                <a th:href="@{/pizza/del_from_menu/{cafe}/{pizza}(cafe=${cafe.id}, pizza=${pizza.id})}"&ndash;&gt;-->
+                    <!--                                <a th:href="@{/}"-->
+                    <!--                                   th:text="'Spring Boot'"-->
+                    <!--                                   class="btn btn-primary d-block flex-grow-1">-->
+                    <!--                                </a>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+
+                    <!--                    </div>-->
+                </div>
+
+                <div class="row d-flex flex-column justify-content-center text-center align-content-center mt-3">
+                    <div class="col-md-10 justify-content-center  my-4">
+                        <a th:href="@{/menu}" class="mr-3 btn btn-white btn-outline-white">Menu</a>
+                        <!--                        <a th:href="@{/admin/add/ingredient}" class="mr-3 btn btn-white btn-outline-white">Add-->
+                        <!--                            ingredient</a>-->
+                        <!--                        <a th:href="@{/admin/add/base}" class="mr-3 btn btn-white btn-outline-white">Add base</a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+
+<div th:replace="fragments/footer :: footer('sergiibugaienko@gmail.com')"></div>
+<div th:replace="fragments/loader"></div>
+
+</body>
+</html>
+

@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-ingredient-table
+      author: Bugaienko
+      changes:
+        - createTable:
+            tableName: ingredient
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: ingredient_id
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: price
+                  type: decimal
+              - column:
+                  name: image
+                  type: varchar(200)
+              - column:
+                  name: type_id
+                  type: integer
+        - addForeignKeyConstraint:
+            baseTableName: ingredient
+            baseColumnNames: type_id
+            constraintName: ingredient_id_type_id
+            referencedTableName: type
+            referencedColumnNames: id
+            onUpdate: CASCADE
+

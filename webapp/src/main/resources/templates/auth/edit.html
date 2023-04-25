@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Edit info')">Header</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar('login')"></nav>
+
+<section class="ftco-section" th:style="'background-image: url(/images/bg_5.jpg)'">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-6">
+                <h3 class="mb-4 justify-content-center text-center" >Edit user</h3>
+                <div class="form auth registration">
+<!--                    <div th:replace="fragments/reg_form"/>-->
+                    <form th:method="PATCH" enctype="multipart/form-data" th:action="@{/user/edit}"  th:object="${person}" xmlns="http://www.w3.org/1999/html">
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Enter username: </label>
+                            <input class="form-control" type="text" th:field="*{username}" id="username" placeholder="Username"/>
+                            <div class="form-text" style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">
+                                Username Error
+                            </div>
+                            <div id="usernameHelp2" class="form-text">must not contain special characters; min length is 3 characters</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="email">Enter your Email: </label>
+                            <input class="form-control" type="email" th:field="*{email}" id="email" placeholder="example@mail.com"/>
+                            <div class="form-text" style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Year of
+                                birth Error
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Enter new password: </label>
+                            <input class="form-control" type="password" th:field="*{password}" id="password"/>
+                            <div class="form-text" style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                                Password Error
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="rePassword">Re-enter new password: </label>
+                            <input class="form-control" type="password" name="rePassword"  id="rePassword" required="true"/>
+                            <div class="form-text" style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                                Password Error
+                            </div>
+                        </div>
+
+
+                        <div class="mb-1 text-center">
+                            <input class="ml-3 btn btn-primary" type="submit" value="Save"/>
+                            <a th:href="@{/user/myPage}" class="ml-3 btn btn-primary" th:text="'Back'"></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div th:replace="fragments/footer :: footer('sergiibugaienko@gmail.com')"></div>
+<div th:replace="fragments/loader"></div>
+
+</body>
+</html>

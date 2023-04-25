@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Main page')">Header</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar('home')"></nav>
+
+
+<section th:replace="fragments/carousel"></section>
+<section th:replace="fragments/intro :: intro(${cafe})"></section>
+<section th:replace="fragments/services"></section>
+
+
+<div th:replace="fragments/footer :: footer('sergiibugaienko@gmail.com')"></div>
+<div th:replace="fragments/loader"></div>
+
+</body>
+</html>

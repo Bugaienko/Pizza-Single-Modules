@@ -1,0 +1,48 @@
+<section th:fragment="intro(cafe)" class="ftco-intro">
+  <div class="container-wrap">
+    <div class="wrap d-md-flex">
+      <div class="info">
+        <div class="row no-gutters">
+          <div class="col-md-4 d-flex ftco-animate">
+            <div class="icon">
+              <span class="icon-phone"></span>
+            </div>
+            <div class="text">
+              <h3 >
+                <a th:href="${'tel:' + cafe.phone}"
+                   th:text="${cafe.phone}"
+                   th:target="_blank">phone</a>
+              </h3>
+              <p>
+                <a th:href="${'mailto:' + cafe.email}"
+                   th:text="${cafe.email}"
+                   th:target="_blank">email</a>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 d-flex ftco-animate">
+            <div class="icon"><span class="icon-my_location"></span></div>
+            <div class="text">
+              <h3 th:text="${cafe.city}">Adr</h3>
+              <p th:text="${cafe.title}">title</p>
+            </div>
+          </div>
+          <div class="col-md-4 d-flex ftco-animate">
+            <div class="icon"><span class="icon-clock-o"></span></div>
+            <div class="text">
+              <h3>Open Monday-Friday</h3>
+              <p th:text="${cafe.getOpenAt() + ' - ' + cafe.getCloseAt()}"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="social d-md-flex pl-md-5 p-4 align-items-center">
+        <ul class="social-icon">
+          <li class="ftco-animate"><a href="https://t.me/SergeyBug" target="_blank"><span class="icon-telegram"></span></a></li>
+          <li class="ftco-animate"><a href="https://github.com/Bugaienko" target="_blank"><span class="icon-github"></span></a></li>
+          <li class="ftco-animate"><a href="https://www.linkedin.com/in/sergii-bugaienko-a89b78237/" target="_blank"><span class="icon-linkedin"></span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

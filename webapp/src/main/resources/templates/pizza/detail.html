@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Pizza details')">Header</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar('menu')"></nav>
+
+<section class="ftco-section" th:style="'background-image: url(/images/bg_1.jpg)'">
+    <div class="container">
+        <div class="row justify-content-center flex-column align-content-center text-center mb-5 pb-3">
+            <h2 th:text="${pizza.name + ' detail view'}" class="balu-green"></h2>
+            <p class="balu-green large">Some features on this page are available to personnel only</p>
+        </div>
+
+        <div th:style="'background-image: url(/images/bg_4.jpg)'">
+            <div class="services-wrap d-flex align-content-center py-3">
+
+                <div class="col-md-3 justify-content-center">
+                    <img class="pizza-img  p-3" th:src="@{/images/pizza/{img}(img=${pizza.image})}"/>
+                    <div class="mb-3 text-center">
+                        <span class="white"
+                              th:text="${'€ ' + #numbers.formatDecimal(pizza.price, 0, 'COMMA', 2, 'POINT')}">$price</span>
+                        <a th:href="@{/menu}" class="ml-2 btn btn-white btn-outline-white">Menu</a>
+                    </div>
+                </div>
+                <div class="col=md-4  ml-3 p-3">
+
+                    <h3 th:text="${pizza.name}"></h3>
+
+                    <p class="white" th:text="${pizza.getBase().getSize() + ' ' + pizza.getBase().name}"></p>
+                    <div th:each="ingr,iter : ${ingredients}"
+                         th:with="baseT=${ingredients[0].getType().name}, basPre = ${iter.first}?  'First' : ${ingredients[iter.index - 1].getType().name}">
+
+                        <h3 class="pizza-detail-type" th:if="${iter.first}" th:text="${baseT}"></h3>
+                        <h3 class="pizza-detail-type" th:if="${ingr.getType().name != basPre} and ${!iter.first}"
+                            th:text="${ingr.getType().name}"></h3>
+                        <!--                    <span th:text="${basPre}"></span>-->
+                        <!--                    <span th:text="${' ' + baseT}"></span>-->
+                        <span class="icon-add_circle"></span>
+                        <span th:text="${' ' + ingr.name}"></span>
+                    </div>
+
+                </div>
+                <div class="col=md-4  ml-3 p-3">
+                    <div class="row align-content-center justify-content-center px-1">
+                        <div th:each="ing: ${ingredients}" class="col-md-4 d-flex flex-wrap justify-content-between mb-sm-4 ftco-animate">
+                        <div class="staff balu-grid px-2 py-3">
+                            <div class="img mb-4"
+                                 th:style="${'background-image: url(/images/ingr/'+ing.image}+')'">
+                            </div>
+                            <div class="info text-center">
+                                <h3 th:text="${ing.name}">
+
+                                </h3>
+                                <span th:text="${ing.type.name}"
+                                      class="position"></span>
+                                <div class="text">
+
+                                </div>
+                            </div>
+<!--                            <div class="d-block flex-grow-1 text-center">-->
+<!--                                <a th:href="@{/admin/edit/pizza/{id}(id=${pizza.id})}"-->
+<!--                                   th:text="SELECT"-->
+<!--                                   class="btn btn-primary d-block flex-grow-1">-->
+
+<!--                                </a>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+            <div th:if="${#strings.substringAfter(user.role, 'ROLE_') == 'ADMIN'}" class="row d-flex flex-column justify-content-center text-center align-content-center mt-3">
+                    <div class="mb-3 text-center">
+                        <h3 class="pizza-detail-type">Administering (admin only)</h3>
+                    </div>
+                <div class="col-md-10 justify-content-center my-4">
+                    <a th:href="@{/pizza/checkPrice/{id}(id=${pizza.id})}" class="mr-3 btn btn-white btn-outline-white">Check price</a>
+                    <a th:href="@{/admin/add/pizza}" class="mr-3 btn btn-white btn-outline-white">Add pizza</a>
+                    <a th:href="@{/admin}" class="mr-3 btn btn-white btn-outline-white">Admin panel</a>
+                </div>
+            </div>
+            <div th:unless="${#strings.substringAfter(user.role, 'ROLE_') == 'ADMIN'}" class="row d-flex flex-column justify-content-center text-center align-content-center mt-3">
+                <div class="mb-3 text-center">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center mb-5 pb-3">
+
+    </div>
+
+
+    </div>
+</section>
+
+
+<div th:replace="fragments/footer :: footer('sergiibugaienko@gmail.com')"></div>
+<div th:replace="fragments/loader"></div>
+
+</body>
+</html>
+

@@ -1,0 +1,44 @@
+<nav th:fragment="navbar(page)" class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light"
+     id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}"><span
+                class="flaticon-pizza-1 mr-1"></span>Pizza<br><small>Delicous</small></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav mr-3">
+                <li th:unless="${user}" class="nav-item" th:classappend="${page == 'login'} ? 'active'"><a
+                        th:href="@{/auth/login}" class="nav-link"><span class="icon icon-user-secret"></span> Login</a>
+                </li>
+                <li th:unless="${user}" class="nav-item" th:classappend="${page == 'signup'} ? 'active'"><a
+                        th:href="@{/auth/registration}" class="nav-link">Sign up</a></li>
+                <li th:if="${user}" class="nav-item" th:classappend="${page == 'logout'} ? 'active'">
+                    <a th:href="@{/user/myPage}" class="nav-link" th:inline="text">
+<!--                    <a th:href="@{/user/{id}(id=${user.id})}" class="nav-link" th:inline="text">-->
+                        <span class="icon icon-user"></span>
+                        [[${user.username}]]
+                    </a>
+                </li>
+                <li th:if="${user}" class="nav-item" th:classappend="${page == 'logout'} ? 'active'">
+                    <a th:href="@{/auth/exit}" class="nav-link">Logout</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" th:classappend="${page == 'home'} ? 'active'"><a th:href="@{/}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item" th:classappend="${page == 'menu'} ? 'active'"><a th:href="@{/menu}"
+                                                                                      class="nav-link">Menu</a></li>
+                <li class="nav-item" th:classappend="${page == 'admin'} ? 'active'"><a th:href="@{/admin}" class="nav-link">Admin</a></li>
+                <li class="nav-item" th:classappend="${page == 'cafes'} ? 'active'"><a th:href="@{/cafe}" class="nav-link">Cafes</a></li>
+                <li class="nav-item" th:classappend="${page == 'about'} ? 'active'"><a th:href="@{http://localhost:8090/swagger-ui/}"
+                                                                                       th:target="_blank"
+                                                                                       class="nav-link">REST API</a></li>
+                <li class="nav-item" th:classappend="${page == 'stack'} ? 'active'"><a th:href="@{/stack}"
+                                                                                         class="nav-link">Stack</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

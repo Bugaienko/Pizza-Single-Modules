@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('Cafe')">Header</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar('cafes')"></nav>
+
+<section class="ftco-section" th:style="'background-image: url(/images/food.png)'">
+    <div class="container">
+
+        <div th:style="'background-image: url(/images/bg_4.jpg)'">
+            <div class="row justify-content-center flex-column align-content-center text-center mb-5 pb-3">
+                <h2 class="mt-5 white" th:text="${cafe.title}"></h2>
+            </div>
+            <div class="row d-flex flex-column justify-content-center align-content-center justify-content-center mt-3">
+
+                <div class="col-md-10">
+                    <div class="row flex-nowrap align-content-center mb-3 p-3">
+                        <div class="one-half img"
+                             th:style="${'background-image: url(/images/cafe/'+ cafe.image}+')'"></div>
+                        <div class="one-half ftco-animate ml-5">
+                            <div class="heading-section ftco-animate ">
+                                <h3 class="mb-4">
+                                    Welcome to <span class="flaticon-pizza">Pizza</span>
+                                    <p th:text="${cafe.title}"></p>
+                                </h3>
+                                <div class="text icon">
+                                    <h5>
+                                        <a th:href="${'tel:' + cafe.phone}"
+                                           th:inline="text">
+                                            <span class="icon-phone balu-yellow"></span>
+                                            [[${cafe.phone}]]
+                                        </a>
+                                    </h5>
+                                    <p>
+                                        <a th:href="${'mailto:' + cafe.email}"
+                                           th:target="_blank"
+                                           th:inline="text">
+                                            <span class="icon-contact_mail balu-yellow"></span>
+                                            [[${cafe.email}]]
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="text icon">
+                                    <h5 th:inline="text">
+                                        <span class="icon-my_location"></span>
+                                        [[${cafe.city}]]
+                                    </h5>
+                                </div>
+                                <div>
+                                    <p>
+                                        <span th:if="${user != null}">
+                                            <a th:if="${#strings.substringAfter(user.role, 'ROLE_') == 'ADMIN'}"
+                                               th:href="@{/pizza/add_to_cafe/{id}(id=${cafe.id})}"
+                                               th:text="'Edit Menu'"
+                                               class="btn btn-white btn-outline-white ml-1 mt-2 p-3 px-xl-4 py-xl-3">
+                                            </a>
+                                        </span>
+
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center mb-5 pb-3 mt-5 pt-5">
+                        <div class="col-md-7 heading-section text-center ftco-animate">
+                            <h2 class="mb-4">Our Menu Pricing</h2>
+                            <p class="flip"><span class="deg1"></span><span class="deg2"></span><span
+                                    class="deg3"></span></p>
+                            <p class="mt-5">Hot, delicious gourmet pizza. You won't leave us hungry.</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div th:each="pizza : ${pizzas}" class="col-md-6">
+                            <div class="pricing-entry d-flex ftco-animate">
+                                <div class="img"
+                                     th:style="${'background-image: url(/images/pizza/' + pizza.image + ')'}">
+                                </div>
+                                <div class="desc pl-3">
+                                    <div class="d-flex text align-items-center">
+                                        <h3><a th:href="@{/pizza/{id}(id=${pizza.id})}" th:text="${pizza.name}"></a>
+                                        </h3>
+                                        <span th:text="${'€ ' + #numbers.formatDecimal(pizza.price, 0, 'COMMA', 2, 'POINT')}"
+                                              class="price"></span>
+                                    </div>
+
+
+                                    <div class="d-block">
+                                        <p>
+                                            <span th:text="${pizza.getBase().getSize() + ' ' + pizza.getBase().getName()}"></span>
+                                        </p>
+                                        <!--Ingredients-->
+                                        <!--                                        <p>-->
+                                        <!--                                                <span th:each="ingr,iterStat : ${pizza.getIngredients()}">-->
+                                        <!--                                                    <span th:text="${!iterStat.last ? ingr.name + ', ' : ingr.name}"></span>-->
+                                        <!--                                                </span>-->
+                                        <!--                                        </p>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+    </div>
+</section>
+
+
+<div th:replace="fragments/footer :: footer('sergiibugaienko@gmail.com')"></div>
+<div th:replace="fragments/loader"></div>
+
+</body>
+</html>
+

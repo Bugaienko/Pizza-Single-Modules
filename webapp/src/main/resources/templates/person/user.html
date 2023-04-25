@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header('User page')">Header</head>
+<body>
+
+<nav th:replace="fragments/navbar :: navbar('login')"></nav>
+
+<section class="ftco-section" th:style="'background-image: url(/images/food.png)'">
+    <div class="container">
+
+        <div class="py-3" th:style="'background-image: url(/images/bg_4.jpg)'">
+            <h2 class="my-2 white text-center" th:text="${user.username}"></h2>
+            <div class="row d-flex justify-content-center align-content-center mt-4 mb-3 p-3">
+                <div class="col-md-4">
+                    <img th:if="${user.avatar != null}" class="balu-avatar"
+                         th:src="@{/images/user/{id}/{img}(img=${user.avatar}, id=${user.id})}">
+                    <img th:if="${user.avatar == null}" class="balu-avatar" th:src="@{/images/user/av_default.jpg}">
+                </div>
+                <div class="col-md-8 py-4">
+                    <div class="heading-section ftco-animate ">
+                        <h3 class="mb-4">
+                            <span class="flaticon-pizza">Pizza</span>
+                        </h3>
+                        <h3 class="balu-yellow mb-2" th:text="${'Wellcome, ' + user.username}"></h3>
+                        <div class="text icon">
+                            <p>
+                                <a th:href="${'mailto:' + user.email}"
+                                   th:target="_blank"
+                                   th:inline="text">
+                                    <span class="icon-contact_mail white"></span>
+                                    <span class="white"> E-mail: </span>
+                                    [[${user.email}]]
+                                </a>
+                            </p>
+                        </div>
+                        <div class="text icon">
+                            <h5 th:with="role=${#strings.substringAfter(user.role, 'ROLE_')}"
+                                th:inline="text">
+                                <span class="icon-user-circle white"></span>
+                                <span class="white"> Status: </span>
+                                [[${role}]]
+
+                            </h5>
+                            <!--                            <h3 th:text="${#strings.substringAfter(user.role, 'ROLE_')}"></h3>-->
+                        </div>
+                        <div>
+                            <p>
+                                <a th:href="@{/user/edit}"
+                                   th:text="'Chanfe info'"
+                                   class="btn btn-white btn-sm btn-outline-white mt-2 p-3 px-xl-4 py-xl-3">
+                                    View</a>
+                            </p>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-center align-content-center justify-content-center mt-3">
+
+                <div class="col-md-7 heading-section text-center ftco-animate">
+                    <h2 class="mb-4">Favorite pizzas</h2>
+                    <p class="flip"><span class="deg1"></span><span class="deg2"></span><span
+                            class="deg3"></span></p>
+                    <p class="mt-5">I like that!</p>
+                </div>
+
+                <div class="col-md-10">
+                    <div class="row">
+                        <div th:each="pizza : ${pizzas}" class="col-md-6">
+                            <div class="pricing-entry d-flex ftco-animate">
+                                <div class="img"
+                                     th:style="${'background-image: url(/images/pizza/' + pizza.image + ')'}">
+                                </div>
+                                <div class="desc pl-3">
+                                    <div class="d-flex text align-items-center">
+                                        <h3><a th:href="@{/pizza/{id}(id=${pizza.id})}" th:text="${pizza.name}"></a>
+                                        </h3>
+                                        <a class="btn btn-sm btn-primary" th:href="@{/pizza/removeFromFav/{id}(id=${pizza.id})}"
+                                           th:inline="text">
+                                            <span class="icon-favorite balu-black"></span> Dislike
+                                        </a>
+<!--                                        <span th:text="${'€ ' + #numbers.formatDecimal(pizza.price, 0, 'COMMA', 2, 'POINT')}"-->
+<!--                                              class="price"></span>-->
+                                    </div>
+
+
+                                    <div class="d-block">
+                                        <p>
+                                            <span th:text="${pizza.getBase().getSize() + ' ' + pizza.getBase().getName()}"></span>
+                                        </p>
+                                        <!--Ingredients-->
+                                        <!--                                        <p>-->
+                                        <!--                                            <span th:each="ingr,iterStat : ${pizza.getIngredients()}">-->
+                                        <!--                                            <span th:text="${!iterStat.last ? ingr.name + ', ' : ingr.name}"></span>-->
+                                        <!--                                            </span>-->
+                                        <!--                                        </p>-->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    </div>
+</section>
+
+
+<div th:replace="fragments/footer :: footer('sergiibugaienko@gmail.com')"></div>
+<div th:replace="fragments/loader"></div>
+
+</body>
+</html>
+
