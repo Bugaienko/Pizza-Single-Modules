@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: change-fk-ingredient
+      author: Bugaienko
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: ingredient
+            constraintName: ingredient_id_type_id
+        - addForeignKeyConstraint:
+            baseTableName: ingredient
+            baseColumnNames: type_id
+            constraintName: ingredient_type_id_type_id
+            referencedTableName: type
+            referencedColumnNames: id

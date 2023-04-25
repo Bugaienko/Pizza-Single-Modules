@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-type-table
+      author: Bugaienko
+      changes:
+        - createTable:
+            tableName: type
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: type_id
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(200)
+                  constraints:
+                    unique: true
+                    nullable: false
+
+

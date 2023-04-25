@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-pizza-ingredient-table
+      author: Bugaienko
+      changes:
+        - createTable:
+            tableName: pizza_ingredient
+            columns:
+              - column:
+                  name: pizza_id
+                  type: int
+              - column:
+                  name: ingredient_id
+                  type: int
+        - addForeignKeyConstraint:
+            constraintName: fk_pizza
+            baseTableName: pizza_ingredient
+            baseColumnNames: pizza_id
+            referencedTableName: pizza
+            referencedColumnNames: id
+            onDelete: SET NULL
+        - addForeignKeyConstraint:
+            constraintName: fk_ingredient
+            baseTableName: pizza_ingredient
+            baseColumnNames: ingredient_id
+            referencedTableName: ingredient
+            referencedColumnNames: id
+            onDelete: SET NULL

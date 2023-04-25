@@ -1,0 +1,136 @@
+openapi: '3.0.0'
+
+info:
+  title: Pizza project API
+  version: 1.0.0
+  description: |
+    Pizza API allows you to remotely manage the pizzeria.
+    ### Check out its awesome features:
+    * Authorization is required to work with the API. Authorization is done by the bearer-token 😎
+
+tags:
+  - name: SimpleRest
+    description: Simple rest CRUD API
+
+servers:
+  - url: http://localhost:8088/
+    description: API server
+paths:
+  /api/auth/login:
+    post:
+      description: Get jwt-token
+      summary: Authorization method
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: successful authorization
+          content:
+            'application/json':
+              schema:
+                properties:
+                  jwt-token:
+                    type: string
+        '400':
+          description: Authentication failed
+  /api/users/all:
+    get:
+      summary: Get all users
+      tags:
+        - Users
+      operationId: getAll
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/personDTO'
+        '401':
+          description: Access denied
+
+
+
+  /api/users/{id}:
+    get:
+      summary: Get user
+      description: Get one by id
+      tags:
+        - Users
+      operationId: get
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        '200' :
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/personDTO'
+        '401':
+          description: Access denied
+        '404':
+          description: Request failed - No items
+
+
+components:
+  parameters:
+    id:
+      in: path
+      name: id
+      required: true
+      description: record id
+      schema:
+        type: integer
+  schemas:
+    personDTO:
+      type: object
+      required:
+        - username
+        - password
+        - email
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: "John Smith"
+        password:
+          type: string
+        email:
+          type: string
+          example: "test@email.com"
+    users:
+      type: array
+      items:
+        $ref: "#/components/schemas/personDTO"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-person-pizza-table
+      author: Bugaienko
+      changes:
+        - createTable:
+            tableName: person_pizza
+            columns:
+              - column:
+                  name: person_id
+                  type: int
+              - column:
+                  name: pizza_id
+                  type: int
+        - addForeignKeyConstraint:
+            constraintName: fk_person_pizza
+            baseTableName: person_pizza
+            baseColumnNames: person_id
+            referencedTableName: person
+            referencedColumnNames: id
+            onDelete: SET NULL
+        - addForeignKeyConstraint:
+            constraintName: fk_pizza_person
+            baseTableName: person_pizza
+            baseColumnNames: pizza_id
+            referencedTableName: pizza
+            referencedColumnNames: id
+            onDelete: SET NULL

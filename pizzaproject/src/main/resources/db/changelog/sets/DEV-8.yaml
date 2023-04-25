@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-cafe-pizza-table
+      author: Bugaienko
+      changes:
+        - createTable:
+            tableName: cafe_pizza
+            columns:
+              - column:
+                  name: cafe_id
+                  type: int
+              - column:
+                  name: pizza_id
+                  type: int
+        - addForeignKeyConstraint:
+            constraintName: fk_cafe_pizza
+            baseTableName: cafe_pizza
+            baseColumnNames: cafe_id
+            referencedTableName: cafe
+            referencedColumnNames: id
+            onDelete: SET NULL
+        - addForeignKeyConstraint:
+            constraintName: fk_pizza_cafe
+            baseTableName: cafe_pizza
+            baseColumnNames: pizza_id
+            referencedTableName: pizza
+            referencedColumnNames: id
+            onDelete: SET NULL

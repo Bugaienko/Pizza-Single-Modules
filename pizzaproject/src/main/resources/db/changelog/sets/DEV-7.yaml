@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-cafe-table
+      author: Bugaienko
+      changes:
+        - createTable:
+            tableName: cafe
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: cafe_id
+              - column:
+                  name: title
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(150)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: open_at
+                  type: varchar(30)
+              - column:
+                  name: close_at
+                  type: varchar(30)
+              - column:
+                  name: image
+                  type: varchar(200)

@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-base-stacks
+      author: Bugaienko
+      changes:
+        - createTable:
+            tableName: stacks
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: stack_id
+              - column:
+                  name: name
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: image
+                  type: varchar(150)
+              - column:
+                  name: priority
+                  type: int

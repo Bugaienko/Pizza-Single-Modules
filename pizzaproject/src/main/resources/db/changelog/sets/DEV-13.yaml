@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-base-table
+      author: Bugaienko
+      changes:
+        - modifyDataType:
+            tableName: pizza
+            columnName: price
+            newDataType: double
