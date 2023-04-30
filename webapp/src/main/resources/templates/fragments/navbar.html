@@ -12,8 +12,10 @@
                 <li th:unless="${user}" class="nav-item" th:classappend="${page == 'login'} ? 'active'"><a
                         th:href="@{/auth/login}" class="nav-link"><span class="icon icon-user-secret"></span> Login</a>
                 </li>
+<!--                <li th:unless="${user}" class="nav-item" th:classappend="${page == 'signup'} ? 'active'"><a-->
+<!--                        th:href="@{/auth/registration}" class="nav-link">Sign up</a></li>-->
                 <li th:unless="${user}" class="nav-item" th:classappend="${page == 'signup'} ? 'active'"><a
-                        th:href="@{/auth/registration}" class="nav-link">Sign up</a></li>
+                        th:href="@{/auth/signupImg}" class="nav-link">Sign up</a></li>
                 <li th:if="${user}" class="nav-item" th:classappend="${page == 'logout'} ? 'active'">
                     <a th:href="@{/user/myPage}" class="nav-link" th:inline="text">
 <!--                    <a th:href="@{/user/{id}(id=${user.id})}" class="nav-link" th:inline="text">-->

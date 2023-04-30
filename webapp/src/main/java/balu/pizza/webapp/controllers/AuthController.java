@@ -4,17 +4,20 @@ import balu.pizza.webapp.models.Person;
 import balu.pizza.webapp.services.PersonService;
 import balu.pizza.webapp.util.PersonValidator;
 import balu.pizza.webapp.util.UserUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
 
 /**
  * @author Sergii Bugaienko
@@ -27,8 +30,11 @@ public class AuthController {
     private final PersonValidator personValidator;
     private final PersonService personService;
     private final UserUtil userUtil;
-//    @Value("${uploadPath}")
-//    private String uploadPath;
+
+    private final Logger logger = LoggerFactory.getLogger(AuthController.class);
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     @Autowired
     public AuthController(PersonValidator personValidator, PersonService personService, UserUtil userUtil) {
@@ -81,7 +87,7 @@ public class AuthController {
 //            }
 //        }
 //        else {
-        System.out.println(person);
+//        System.out.println(person);
             personValidator.validate(person, bindingResult);
             personValidator.validate(person, rePassword, bindingResult);
 
@@ -90,6 +96,7 @@ public class AuthController {
             }
 
             Person person1 = personService.register(person);
+            logger.info("New user created {} : id={}", person1.getUsername(), person1.getId());
 //        }
 
         return "redirect:/auth/login";
@@ -99,9 +106,49 @@ public class AuthController {
 
     @GetMapping("/exit")
     public String confirmLogout(Model model) {
-        Person user = userUtil.getActiveUser();
-        model.addAttribute("user", user);
+
         return "auth/exit";
+    }
+
+    @GetMapping("/signupImg")
+    public String loadImage(@ModelAttribute("person") Person person){
+        return "auth/loadImage";
+    }
+
+    @PostMapping("/signupImg")
+    public String createUserWithAvatar(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, String rePassword, @RequestParam("file") MultipartFile avatar){
+        System.out.println("Auth contr -> post signup");
+        personValidator.validate(person, bindingResult);
+        personValidator.validate(person, rePassword, bindingResult);
+
+        if (avatar == null){
+            bindingResult.rejectValue("avatar", "", "No avatar added");
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "auth/loadImage";
+        }
+
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdir();
+        }
+
+        String uuidFile =  UUID.randomUUID().toString();
+        String resultFileName = uuidFile + "_" + avatar.getOriginalFilename();
+        System.out.println(resultFileName);
+
+        try {
+            avatar.transferTo(new File(uploadPath + "/" + resultFileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        person.setAvatar(resultFileName);
+
+        Person person1 = personService.register(person);
+        logger.info("New user created {} : id={}", person1.getUsername(), person1.getId());
+
+        return "redirect:/auth/login";
     }
 
 }

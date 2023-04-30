@@ -13,7 +13,8 @@
             <div class="row d-flex justify-content-center align-content-center mt-4 mb-3 p-3">
                 <div class="col-md-4">
                     <img th:if="${user.avatar != null}" class="balu-avatar"
-                         th:src="@{/images/user/{id}/{img}(img=${user.avatar}, id=${user.id})}">
+                         th:src="@{/avatar/{img}(img=${user.avatar})}">
+<!--                         th:src="@{/images/user/{id}/{img}(img=${user.avatar}, id=${user.id})}">-->
                     <img th:if="${user.avatar == null}" class="balu-avatar" th:src="@{/images/user/av_default.jpg}">
                 </div>
                 <div class="col-md-8 py-4">
