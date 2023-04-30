@@ -8,6 +8,8 @@ database.properties
 hibernate.cfg.xml
 hibernate.properties
 *.properties
+*.yaml
+application.yaml
 
 *.idea
 /target
@@ -51,3 +53,4 @@ hibernate.properties
 hs_err_pid*
 replay_pid*
 HelloHibernate/src/main/resources/hibernate.cfg.xml
+*.yaml

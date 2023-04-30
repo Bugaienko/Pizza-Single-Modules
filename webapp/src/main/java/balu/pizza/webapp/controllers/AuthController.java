@@ -27,8 +27,8 @@ public class AuthController {
     private final PersonValidator personValidator;
     private final PersonService personService;
     private final UserUtil userUtil;
-    @Value("${uploadPath}")
-    private String uploadPath;
+//    @Value("${uploadPath}")
+//    private String uploadPath;
 
     @Autowired
     public AuthController(PersonValidator personValidator, PersonService personService, UserUtil userUtil) {
