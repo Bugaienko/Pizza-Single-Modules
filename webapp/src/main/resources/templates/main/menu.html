@@ -36,35 +36,38 @@
                             <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel"
                                  aria-labelledby="v-pills-1-tab">
                                 <div class="row">
-                                    <div th:each="pizza : ${pizzas}" class="col-md-4 mb-3 text-center">
-                                        <div class="menu-wrap">
-                                            <a th:href="@{/pizza/{id}(id=${pizza.id})}" class="menu-img img mb-4"
-                                               th:style="${'background-image: url(/images/pizza/'+pizza.image}+')'">
-                                            </a>
-                                            <div class="text">
-                                                <h3>
-                                                    <a
-                                                            th:href="@{/pizza/{id}(id=${pizza.id})}"
-                                                            th:text="${pizza.name}"
-                                                    >pizza name</a>
-                                                </h3>
-                                                <p>
-                                                    <span th:text="${pizza.getBase().getSize() + ' ' + pizza.getBase().name}"></span>
-                                                </p>
-                                                <p>
+                                    <div th:each="pizza : ${pizzas}" class="col-md-4 mb-5 text-center">
+                                        <div class="menu-wrap px-2 balu-menu-stretch">
+                                            <div class="balu-menu-stretch-inner balu-grid">
+                                                <a th:href="@{/pizza/{id}(id=${pizza.id})}" class="menu-img img mb-4"
+                                                   th:style="${'background-image: url(/images/pizza/'+pizza.image}+')'">
+                                                </a>
+                                                <div class="text">
+                                                    <h3>
+                                                        <a
+                                                                th:href="@{/pizza/{id}(id=${pizza.id})}"
+                                                                th:text="${pizza.name}"
+                                                        >pizza name</a>
+                                                    </h3>
+                                                    <p>
+                                                        <span th:text="${pizza.getBase().getSize() + ' ' + pizza.getBase().name}"></span>
+                                                    </p>
+                                                    <p>
                                                 <span th:each="ingr,iterStat : ${pizza.getIngredients()}">
                                                     <span th:text="${!iterStat.last ? ingr.name + ', ' : ingr.name}"></span>
                                                 </span>
-                                                </p>
-                                                <p class="price"><span
-                                                        th:text="${'€ ' + #numbers.formatDecimal(pizza.price, 0, 'COMMA', 2, 'POINT')}">price</span>
-                                                </p>
-                                                <div class="mb-1">
-                                                    <a th:href="@{/cafe/pizza/{pizzaId}(pizzaId=${pizza.id})}"
-                                                       class="btn btn-white btn-outline-white">Availability</a>
-                                                    <a class="btn btn-white btn-outline-white" th:href="@{/pizza/addToFav/{id}(id=${pizza.id})}">
-                                                        <span class="icon-favorite white"></span> Like
-                                                    </a>
+                                                    </p>
+                                                    <p class="price"><span
+                                                            th:text="${'€ ' + #numbers.formatDecimal(pizza.price, 0, 'COMMA', 2, 'POINT')}">price</span>
+                                                    </p>
+                                                    <div class="mb-1">
+                                                        <a th:href="@{/cafe/pizza/{pizzaId}(pizzaId=${pizza.id})}"
+                                                           class="btn btn-white btn-outline-white">Availability</a>
+                                                        <a class="btn btn-white btn-outline-white"
+                                                           th:href="@{/pizza/addToFav/{id}(id=${pizza.id})}">
+                                                            <span class="icon-favorite white"></span> Like
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,8 +106,9 @@
                                                 </p>
                                                 <div class="mb-1">
                                                     <a th:href="@{/cafe/pizza/{pizzaId}(pizzaId=${pizza.id})}"
-                                                      class="btn btn-white btn-outline-white">Availability</a>
-                                                    <a class="btn btn-white btn-outline-white" th:href="@{/pizza/addToFav/{id}(id=${pizza.id})}">
+                                                       class="btn btn-white btn-outline-white">Availability</a>
+                                                    <a class="btn btn-white btn-outline-white"
+                                                       th:href="@{/pizza/addToFav/{id}(id=${pizza.id})}">
                                                         <span class="icon-favorite white"></span> Like
                                                     </a>
                                                 </div>
@@ -145,8 +149,9 @@
                                                 </p>
                                                 <div class="mb-1">
                                                     <a th:href="@{/cafe/pizza/{pizzaId}(pizzaId=${pizza.id})}"
-                                                      class="btn btn-white btn-outline-white">Availability</a>
-                                                    <a class="btn btn-white btn-outline-white" th:href="@{/pizza/addToFav/{id}(id=${pizza.id})}">
+                                                       class="btn btn-white btn-outline-white">Availability</a>
+                                                    <a class="btn btn-white btn-outline-white"
+                                                       th:href="@{/pizza/addToFav/{id}(id=${pizza.id})}">
                                                         <span class="icon-favorite white"></span> Like
                                                     </a>
                                                 </div>
@@ -187,8 +192,9 @@
                                                 </p>
                                                 <div class="mb-1">
                                                     <a th:href="@{/cafe/pizza/{pizzaId}(pizzaId=${pizza.id})}"
-                                                      class="btn btn-white btn-outline-white">Availability</a>
-                                                    <a class="btn btn-white btn-outline-white" th:href="@{/pizza/addToFav/{id}(id=${pizza.id})}">
+                                                       class="btn btn-white btn-outline-white">Availability</a>
+                                                    <a class="btn btn-white btn-outline-white"
+                                                       th:href="@{/pizza/addToFav/{id}(id=${pizza.id})}">
                                                         <span class="icon-favorite white"></span> Like
                                                     </a>
                                                 </div>

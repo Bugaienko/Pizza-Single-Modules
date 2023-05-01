@@ -12627,3 +12627,23 @@ p.balu-yellow{
     color: whitesmoke !important;
     text-align: justify;
 }
+
+/*.row > [class*='col-'] {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    border: 1px solid green;*/
+/*    padding: 10px;*/
+/*    align-items: stretch;*/
+/*}*/
+
+.balu-menu-stretch {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100%;
+}
+.balu-menu-stretch-inner {
+    /*border: solid 1px silver;*/
+    /*border-radius: 10px;*/
+    height: 100%;
+}
