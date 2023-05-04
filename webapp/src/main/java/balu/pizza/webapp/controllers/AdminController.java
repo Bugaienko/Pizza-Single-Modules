@@ -264,7 +264,8 @@ public class AdminController {
             return "admin/editPizza";
         }
 
-        pizzaService.update(pizzaId, pizza);
+//        pizzaService.update(pizzaId, pizza);
+        pizzaService.update(pizza);
 
         return "redirect:/admin";
     }

@@ -5,6 +5,7 @@ import balu.pizza.webapp.models.Pizza;
 import balu.pizza.webapp.models.TypeIngredient;
 import balu.pizza.webapp.repositiries.IngredientRepository;
 import balu.pizza.webapp.repositiries.TypesRepository;
+import balu.pizza.webapp.util.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +52,9 @@ public class IngredientService {
     }
 
     @Transactional
-    public void create(Ingredient ingredient, TypeIngredient typeIngredient) {
-        TypeIngredient type = typesRepository.getById(ingredient.getId());
+    public Ingredient create(Ingredient ingredient, TypeIngredient typeIngredient) {
+//        TypeIngredient type = typesRepository.getById(ingredient.getId());
+        TypeIngredient type = typesRepository.findById(typeIngredient.getId()).orElseThrow(NotFoundException::new);
 
         Ingredient newIngredient = new Ingredient();
         newIngredient.setName(ingredient.getName());
@@ -60,8 +62,8 @@ public class IngredientService {
         newIngredient.setImage(ingredient.getImage());
         newIngredient.setType(type);
 
-        ingredientRepository.save(newIngredient);
         logger.info("Create new ingredient {}", ingredient.getName());
+        return ingredientRepository.save(newIngredient);
     }
 
     public Ingredient findById(int ingrId) {

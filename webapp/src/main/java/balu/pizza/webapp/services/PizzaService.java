@@ -2,6 +2,7 @@ package balu.pizza.webapp.services;
 
 import balu.pizza.webapp.models.*;
 import balu.pizza.webapp.repositiries.PizzaRepository;
+import balu.pizza.webapp.util.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,19 +40,9 @@ public class PizzaService {
     }
 
     public Pizza findById(int id) {
-        return pizzaRepository.findById(id).get();
+        return pizzaRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
-    public List<Cafe> findCafesByPizzaId(int pizzaId) {
-        Pizza pizza;
-        List<Cafe> cafes = new ArrayList<>();
-        Optional<Pizza> pizzaOpt = pizzaRepository.findById(pizzaId);
-        if (pizzaOpt.isPresent()) {
-            pizza = pizzaOpt.get();
-            cafes = pizza.getCafes();
-        }
-        return cafes;
-    }
 
     public double getCalculatedPrice(Pizza pizza) {
         List<Ingredient> ingredients = pizza.getIngredients();
@@ -95,15 +86,8 @@ public class PizzaService {
     }
 
     @Transactional
-    public Pizza update(int pizzaId, Pizza pizzaData) {
-//        Pizza pizza = pizzaRepository.findById(pizzaId).get();
+    public Pizza update(Pizza pizzaData) {
 
-        //TODO save to BD
-//        pizza.setBase(pizzaData.getBase());
-//        pizza.setName(pizzaData.getName());
-//        pizza.setPrice(pizzaData.getPrice());
-//        pizza.setIngredients(pizzaData.getIngredients());
-//        pizza.setImage(pizzaData.getImage());
 
         logger.info("Update pizza {}/{}", pizzaData.getId(), pizzaData.getName());
         return pizzaRepository.save(pizzaData);

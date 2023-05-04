@@ -32,11 +32,11 @@ public class TypeService {
     }
 
     @Transactional
-    public void create(TypeIngredient type) {
+    public TypeIngredient create(TypeIngredient type) {
         TypeIngredient newType = new TypeIngredient(type.getName());
 //        System.out.println(newType);
-        typesRepository.save(newType);
         logger.info("Create new TypeIngredient {}", newType.getName());
+        return typesRepository.save(newType);
     }
 
     public Optional<TypeIngredient> findByName(String name) {

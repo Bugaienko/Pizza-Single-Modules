@@ -34,11 +34,11 @@ public class BaseService {
     }
 
     @Transactional
-    public void create(Base base) {
+    public Base create(Base base) {
         Base newBase = new Base(base.getSize(), base.getName(), base.getPrice());
         //DONE save tp BD
         logger.info("Add new base {}", newBase.getName());
-        baseRepository.save(newBase);
+        return baseRepository.save(newBase);
     }
 
     public List<Base> findAllSorted() {
