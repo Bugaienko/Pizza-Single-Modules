@@ -50,6 +50,15 @@ public class Pizza {
     public Pizza() {
     }
 
+    public Pizza(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
+    public Pizza(String name) {
+        this.name = name;
+    }
+
     public int getId() {
         return id;
     }
@@ -123,5 +132,28 @@ public class Pizza {
                 ", image='" + image + '\'' +
                 ", base=" + base +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pizza pizza = (Pizza) o;
+
+        if (id != pizza.id) return false;
+        if (Double.compare(pizza.price, price) != 0) return false;
+        return name.equals(pizza.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + name.hashCode();
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }

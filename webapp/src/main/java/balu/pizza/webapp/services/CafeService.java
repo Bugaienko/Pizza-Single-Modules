@@ -4,6 +4,7 @@ import balu.pizza.webapp.models.Cafe;
 import balu.pizza.webapp.models.Pizza;
 import balu.pizza.webapp.repositiries.CafeRepository;
 import balu.pizza.webapp.repositiries.PizzaRepository;
+import balu.pizza.webapp.util.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class CafeService {
     }
 
     public Cafe findById(int id){
-        return cafeRepository.findById(id).get();
+        return cafeRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     public List<Cafe> findAll(){
@@ -58,8 +59,9 @@ public class CafeService {
 
     @Transactional
     public void addPizzaToCafe(int cafeId, int pizzaId) {
-        Pizza pizza = pizzaRepository.getReferenceById(pizzaId);
-        Cafe cafe = cafeRepository.getReferenceById(cafeId);
+        Pizza pizza = pizzaRepository.findById(pizzaId).orElseThrow(NotFoundException::new);
+        Cafe cafe1 = cafeRepository.getReferenceById(cafeId);
+        Cafe cafe = findById(cafeId);
         List<Pizza> pizzas = cafe.getPizzas();
 
         if (!pizzas.contains(pizza)){
@@ -73,8 +75,8 @@ public class CafeService {
 
     @Transactional
     public void delPizzaFromCafe(int cafeId, int pizzaId) {
-        Pizza pizza = pizzaRepository.getReferenceById(pizzaId);
-        Cafe cafe = cafeRepository.getReferenceById(cafeId);
+        Pizza pizza = pizzaRepository.findById(pizzaId).orElseThrow(NotFoundException::new);
+        Cafe cafe =findById(cafeId);
         List<Pizza> pizzas = cafe.getPizzas();
 
         pizzas.remove(pizza);
