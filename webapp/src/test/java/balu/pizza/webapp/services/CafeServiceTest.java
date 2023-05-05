@@ -95,6 +95,7 @@ class CafeServiceTest {
 
         int cafeId = created.getId();
         Cafe cafe = cafeService.findById(cafeId);
+
         List<Pizza> pizzaCafeList = pizzaService.findByCafe(cafe);
         Pizza pizza = new Pizza("New pizza");
         pizza = pizzaService.create(pizza);

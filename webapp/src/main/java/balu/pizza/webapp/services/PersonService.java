@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +75,9 @@ public class PersonService {
     public void addPizzaToFav(Person person, Pizza pizza) {
 //        List<Pizza> favorites2 = person.getFavorites();
         List<Pizza> favorites = pizzaRepository.findByPersons(person);
+        if (favorites == null){
+            favorites = new ArrayList<>();
+        }
 
         if (!favorites.contains(pizza)) {
             favorites.add(pizza);
@@ -86,6 +90,9 @@ public class PersonService {
     @Transactional
     public void removePizzaFromFav(Person person, Pizza pizza) {
         List<Pizza> favorites = pizzaRepository.findByPersons(person);
+        if (favorites == null){
+            favorites = new ArrayList<>();
+        }
         favorites.remove(pizza);
         person.setFavorites(favorites);
 

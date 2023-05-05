@@ -1,9 +1,6 @@
 package balu.pizza.webapp.services;
 
-import balu.pizza.webapp.models.Base;
-import balu.pizza.webapp.models.Ingredient;
-import balu.pizza.webapp.models.Pizza;
-import balu.pizza.webapp.models.TypeIngredient;
+import balu.pizza.webapp.models.*;
 import balu.pizza.webapp.util.NotFoundException;
 import org.junit.jupiter.api.*;
 
@@ -12,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,14 +19,16 @@ class PizzaServiceTest {
     private final BaseService baseService;
     private final IngredientService ingredientService;
     private final TypeService typeService;
+    private final PersonService personService;
     private static List<Pizza> pizzas;
 
     @Autowired
-    PizzaServiceTest(PizzaService pizzaService, BaseService baseService, IngredientService ingredientService, TypeService typeService) {
+    PizzaServiceTest(PizzaService pizzaService, BaseService baseService, IngredientService ingredientService, TypeService typeService, PersonService personService) {
         this.pizzaService = pizzaService;
         this.baseService = baseService;
         this.ingredientService = ingredientService;
         this.typeService = typeService;
+        this.personService = personService;
     }
 
     @BeforeAll
@@ -166,7 +166,85 @@ class PizzaServiceTest {
     @Order(8)
     void pizzaServiceGetCalculatedPriceTest(){
 
-        Pizza pizza10 = new Pizza("Pizza10", 30);
+//        Pizza pizza10 = new Pizza("Pizza10", 30);
+//        Base base10 = new Base("Small", "Base10", 5);
+//        base10 = baseService.create(base10);
+//        pizza10.setBase(base10);
+//        TypeIngredient type = new TypeIngredient("Test type");
+//        type = typeService.create(type);
+//
+//        Ingredient ingredient = new Ingredient("Ingredient1", 5.0);
+//        Ingredient ingredient2 = new Ingredient("Ingredient1", 4.0);
+//        ingredient = ingredientService.create(ingredient, type);
+//        ingredient2 = ingredientService.create(ingredient2, type);
+//
+//        List<Ingredient> ingredients;
+//
+//        if (pizza10.getIngredients() == null) {
+//            ingredients = new ArrayList<>();
+//        } else {
+//            ingredients = pizza10.getIngredients();
+//        }
+//
+//        ingredients.add(ingredient);
+//        ingredients.add(ingredient2);
+//
+//        pizza10.setIngredients(ingredients);
+//
+//        Pizza savedPizza = pizzaService.create(pizza10);
+        Pizza pizza10 = createAndSaveNewPizza("TestPizza");
+
+        double calculatedPrice = pizzaService.getCalculatedPrice(pizza10);
+
+        assertEquals(14, calculatedPrice);
+
+        Base base11 = new Base("Medium", "Base11", 5);
+        base11 = baseService.create(base11);
+        pizza10.setBase(base11);
+        pizzaService.update(pizza10);
+
+        assertEquals(16.7, pizzaService.getCalculatedPrice(pizza10));
+
+        Base base12 = new Base("Large", "Base11", 5);
+        base12 = baseService.create(base12);
+        pizza10.setBase(base12);
+        pizzaService.update(pizza10);
+        assertEquals(19.4, pizzaService.getCalculatedPrice(pizza10));
+
+
+    }
+
+    @Test
+    void personServiceAddPizzaToFavAndDelPizzaFromFavTest(){
+        String userName = "User11";
+        String email = "user11@mail.com";
+        Person person = new Person(userName, "password", email);
+        person = personService.register(person);
+        Pizza pizza = createAndSaveNewPizza("TestPizza");
+        List<Pizza> usersPizzaList = pizzaService.findByPerson(person);
+        personService.addPizzaToFav(person, pizza);
+        List<Pizza> newUserPizzaList = pizzaService.findByPerson(person);
+
+        assertEquals(usersPizzaList.size() + 1, newUserPizzaList.size());
+        assertTrue(newUserPizzaList.contains(pizza));
+
+        personService.removePizzaFromFav(person, pizza);
+        List<Pizza> afterRemovePizzaList = pizzaService.findByPerson(person);
+        assertFalse(afterRemovePizzaList.contains(pizza));
+        assertEquals(newUserPizzaList.size() -1, afterRemovePizzaList.size());
+
+    }
+
+    private Pizza createAndSaveNewPizza(String pizzaName){
+
+        Optional<Pizza> pizza = pizzaService.findByName(pizzaName);
+        if (pizza.isPresent()){
+            return pizza.get();
+        }
+
+
+
+        Pizza pizza10 = new Pizza(pizzaName, 30);
         Base base10 = new Base("Small", "Base10", 5);
         base10 = baseService.create(base10);
         pizza10.setBase(base10);
@@ -191,25 +269,7 @@ class PizzaServiceTest {
 
         pizza10.setIngredients(ingredients);
 
-        Pizza savedPizza = pizzaService.create(pizza10);
-        double calculatedPrice = pizzaService.getCalculatedPrice(savedPizza);
-
-        assertEquals(14, calculatedPrice);
-
-        Base base11 = new Base("Medium", "Base11", 5);
-        base11 = baseService.create(base11);
-        pizza10.setBase(base11);
-        pizzaService.update(pizza10);
-
-        assertEquals(16.7, pizzaService.getCalculatedPrice(pizza10));
-
-        Base base12 = new Base("Large", "Base11", 5);
-        base12 = baseService.create(base12);
-        pizza10.setBase(base12);
-        pizzaService.update(pizza10);
-        assertEquals(19.4, pizzaService.getCalculatedPrice(pizza10));
-
-
+        return pizzaService.create(pizza10);
     }
 
 

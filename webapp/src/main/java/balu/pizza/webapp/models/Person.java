@@ -6,7 +6,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Sergii Bugaienko
@@ -60,7 +62,6 @@ public class Person {
         this.email = email;
         this.avatar = avatar;
     }
-
 
 
     public List<Pizza> getSortedPizza(){
@@ -120,6 +121,9 @@ public class Person {
     }
 
     public List<Pizza> getFavorites() {
+        if (favorites == null) {
+            this.favorites = new ArrayList<>();
+        }
         return favorites;
     }
 
@@ -138,7 +142,31 @@ public class Person {
                 '}';
     }
 
-//    public static List<Pizza> deleteDublicates(List<Pizza> pizzas) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        if (id != person.id) return false;
+        if (!username.equals(person.username)) return false;
+        if (!password.equals(person.password)) return false;
+        if (!email.equals(person.email)) return false;
+        return Objects.equals(role, person.role);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + username.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
+    }
+
+    //    public static List<Pizza> deleteDublicates(List<Pizza> pizzas) {
 //        Set<Pizza> set = new LinkedHashSet<>(pizzas);
 //        return new ArrayList<>(set);
 //    }
