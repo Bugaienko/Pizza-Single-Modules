@@ -135,13 +135,13 @@ class PizzaServiceTest {
             Pizza random1 = pizzas1.get(pizzas1.size() - 1);
             assertTrue(sortedPizzas.contains(random));
             assertTrue(sortedPizzas.contains(random1));
-         }
+        }
 
     }
 
     @Test
     @Order(6)
-    void pizzaServiceUpdateTest(){
+    void pizzaServiceUpdateTest() {
         String newName = "Some test name";
         int id = 1;
         Pizza pizza = pizzaService.findById(id);
@@ -153,7 +153,7 @@ class PizzaServiceTest {
 
     @Test
     @Order(7)
-    void pizzaServiceSetNewPriceTest(){
+    void pizzaServiceSetNewPriceTest() {
         int id = 1;
         Pizza pizza = pizzaService.findById(id);
         double newPrice = 22.5;
@@ -164,34 +164,8 @@ class PizzaServiceTest {
 
     @Test
     @Order(8)
-    void pizzaServiceGetCalculatedPriceTest(){
+    void pizzaServiceGetCalculatedPriceTest() {
 
-//        Pizza pizza10 = new Pizza("Pizza10", 30);
-//        Base base10 = new Base("Small", "Base10", 5);
-//        base10 = baseService.create(base10);
-//        pizza10.setBase(base10);
-//        TypeIngredient type = new TypeIngredient("Test type");
-//        type = typeService.create(type);
-//
-//        Ingredient ingredient = new Ingredient("Ingredient1", 5.0);
-//        Ingredient ingredient2 = new Ingredient("Ingredient1", 4.0);
-//        ingredient = ingredientService.create(ingredient, type);
-//        ingredient2 = ingredientService.create(ingredient2, type);
-//
-//        List<Ingredient> ingredients;
-//
-//        if (pizza10.getIngredients() == null) {
-//            ingredients = new ArrayList<>();
-//        } else {
-//            ingredients = pizza10.getIngredients();
-//        }
-//
-//        ingredients.add(ingredient);
-//        ingredients.add(ingredient2);
-//
-//        pizza10.setIngredients(ingredients);
-//
-//        Pizza savedPizza = pizzaService.create(pizza10);
         Pizza pizza10 = createAndSaveNewPizza("TestPizza");
 
         double calculatedPrice = pizzaService.getCalculatedPrice(pizza10);
@@ -215,7 +189,7 @@ class PizzaServiceTest {
     }
 
     @Test
-    void personServiceAddPizzaToFavAndDelPizzaFromFavTest(){
+    void personServiceAddPizzaToFavAndDelPizzaFromFavTest() {
         String userName = "User11";
         String email = "user11@mail.com";
         Person person = new Person(userName, "password", email);
@@ -231,17 +205,90 @@ class PizzaServiceTest {
         personService.removePizzaFromFav(person, pizza);
         List<Pizza> afterRemovePizzaList = pizzaService.findByPerson(person);
         assertFalse(afterRemovePizzaList.contains(pizza));
-        assertEquals(newUserPizzaList.size() -1, afterRemovePizzaList.size());
+        assertEquals(newUserPizzaList.size() - 1, afterRemovePizzaList.size());
 
     }
 
-    private Pizza createAndSaveNewPizza(String pizzaName){
-
-        Optional<Pizza> pizza = pizzaService.findByName(pizzaName);
-        if (pizza.isPresent()){
-            return pizza.get();
+    @Test
+    void typeServiceFindByIdTest() {
+        Pizza pizza = createAndSaveNewPizza("TestPizza");
+        List<Ingredient> ingredients = ingredientService.findByPizza(pizza);
+        for (Ingredient ingredient : ingredients) {
+            TypeIngredient type = ingredient.getType();
+            TypeIngredient searchedType = typeService.findById(type.getId());
+            assertEquals(searchedType.getId(), type.getId());
         }
 
+        List<TypeIngredient> typeIngredientList = typeService.findAll();
+
+        String testTypeName = "Test new type";
+        TypeIngredient type = new TypeIngredient(testTypeName);
+        TypeIngredient addedType = typeService.create(type);
+        Optional<TypeIngredient> searchedByName = typeService.findByName(testTypeName);
+        assertTrue(searchedByName.isPresent());
+        assertEquals(testTypeName, searchedByName.get().getName());
+
+        List<TypeIngredient> afterAddTypesList = typeService.findAll();
+        List<TypeIngredient> sortedAfterAddTypesList = typeService.findAllSorted();
+        assertEquals(typeIngredientList.size() + 1, afterAddTypesList.size());
+        assertEquals(typeIngredientList.size() + 1, sortedAfterAddTypesList.size());
+        assertTrue(sortedAfterAddTypesList.contains(addedType));
+
+        String newTypeName = "new Type Name";
+        TypeIngredient typeDataForChangeName = new TypeIngredient(newTypeName);
+        int idForUpdateName = addedType.getId();
+        typeDataForChangeName.setId(idForUpdateName);
+
+        typeService.updateName(typeDataForChangeName);
+        TypeIngredient afterNameUpdateType = typeService.findById(idForUpdateName);
+
+        assertEquals(newTypeName, afterNameUpdateType.getName());
+
+    }
+
+    @Test
+    void ingredientServiceTest() {
+        Pizza pizza = createAndSaveNewPizza("TestPizza");
+        List<Ingredient> ingredients = ingredientService.findByPizza(pizza);
+        assertEquals(2, ingredients.size());
+
+        List<Ingredient> ingredientList = ingredientService.findAll();
+        TypeIngredient type = new TypeIngredient("Test type2");
+        type = typeService.create(type);
+
+        String ingredientName = "Ingredient4";
+        Ingredient ingredient = new Ingredient(ingredientName, 5.0);
+        ingredient = ingredientService.create(ingredient, type);
+
+
+        List<Ingredient> ingredientListNew = ingredientService.findAll();
+        List<Ingredient> sortedIngredientsList = ingredientService.findAllSort();
+        assertEquals(ingredientList.size() +1, ingredientListNew.size());
+        assertEquals(ingredientList.size() + 1, sortedIngredientsList.size());
+        assertTrue(sortedIngredientsList.contains(ingredient));
+
+        Ingredient searchedById = ingredientService.findById(ingredient.getId());
+        assertEquals(ingredient.getId(), searchedById.getId());
+        assertEquals(ingredient, searchedById);
+        assertThrows(NotFoundException.class, () -> {
+            ingredientService.findById(111002221);
+        });
+
+        Optional<Ingredient> foundedByName = ingredientService.findIngredientByName(ingredientName);
+        assertTrue(foundedByName.isPresent());
+        assertEquals(ingredientName, foundedByName.get().getName());
+        Optional<Ingredient> foundedByWrongName = ingredientService.findIngredientByName("Wrong Ing name");
+        assertFalse(foundedByWrongName.isPresent());
+    }
+
+
+
+    private Pizza createAndSaveNewPizza(String pizzaName) {
+
+        Optional<Pizza> pizza = pizzaService.findByName(pizzaName);
+        if (pizza.isPresent()) {
+            return pizza.get();
+        }
 
 
         Pizza pizza10 = new Pizza(pizzaName, 30);
@@ -252,7 +299,7 @@ class PizzaServiceTest {
         type = typeService.create(type);
 
         Ingredient ingredient = new Ingredient("Ingredient1", 5.0);
-        Ingredient ingredient2 = new Ingredient("Ingredient1", 4.0);
+        Ingredient ingredient2 = new Ingredient("Ingredient2", 4.0);
         ingredient = ingredientService.create(ingredient, type);
         ingredient2 = ingredientService.create(ingredient2, type);
 
@@ -271,8 +318,6 @@ class PizzaServiceTest {
 
         return pizzaService.create(pizza10);
     }
-
-
 
 
 }

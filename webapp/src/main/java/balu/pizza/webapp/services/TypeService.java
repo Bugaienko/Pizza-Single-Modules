@@ -28,6 +28,10 @@ public class TypeService {
         this.typesRepository = typesRepository;
     }
 
+    public List<TypeIngredient> findAll(){
+        return typesRepository.findAll();
+    }
+
     public List<TypeIngredient> findAllSorted(){
         return typesRepository.findAll(Sort.by("id").ascending());
     }
@@ -49,10 +53,12 @@ public class TypeService {
     }
 
     @Transactional
-    public TypeIngredient update(TypeIngredient type) {
+    public TypeIngredient updateName(TypeIngredient type) {
         TypeIngredient typeIngredient = findById(type.getId());
         typeIngredient.setName(type.getName());
         logger.info("Update TypeIngredient id={}", type.getId());
         return typesRepository.save(typeIngredient);
     }
+
+
 }

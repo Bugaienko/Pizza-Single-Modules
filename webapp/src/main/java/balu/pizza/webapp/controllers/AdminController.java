@@ -153,7 +153,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admin/editType";
         }
-        typeService.update(type);
+        typeService.updateName(type);
         return "redirect:/admin";
 
     }

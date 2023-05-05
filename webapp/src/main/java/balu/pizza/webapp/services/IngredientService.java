@@ -67,11 +67,8 @@ public class IngredientService {
     }
 
     public Ingredient findById(int ingrId) {
-        Optional<Ingredient> ingredient =  ingredientRepository.findById(ingrId);
-        if (ingredient.isPresent()) {
-            return ingredient.get();
-        }
-        else return null;
+        return   ingredientRepository.findById(ingrId).orElseThrow(NotFoundException::new);
+
     }
 
     @Transactional

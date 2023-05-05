@@ -10,7 +10,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,12 +22,14 @@ import java.util.Optional;
 public class PizzaService {
 
     private final PizzaRepository pizzaRepository;
+    private final IngredientService ingredientService;
     private final Logger logger = LoggerFactory.getLogger(PizzaService.class);
 
 
     @Autowired
-    public PizzaService(PizzaRepository pizzaRepository) {
+    public PizzaService(PizzaRepository pizzaRepository, IngredientService ingredientService) {
         this.pizzaRepository = pizzaRepository;
+        this.ingredientService = ingredientService;
     }
 
     public List<Pizza> findAll() {
@@ -45,7 +46,8 @@ public class PizzaService {
 
 
     public double getCalculatedPrice(Pizza pizza) {
-        List<Ingredient> ingredients = pizza.getIngredients();
+        List<Ingredient> ingredients = ingredientService.findByPizza(pizza);
+//        List<Ingredient> ingredients = pizza.getIngredients();
         Base base = pizza.getBase();
         double multiplier = 1;
         if (base.getSize().equalsIgnoreCase("medium")) {
@@ -87,10 +89,15 @@ public class PizzaService {
 
     @Transactional
     public Pizza update(Pizza pizzaData) {
-
+        Pizza pizza = findById(pizzaData.getId());
+        pizza.setName(pizzaData.getName());
+        pizza.setBase(pizzaData.getBase());
+        pizza.setIngredients(pizzaData.getIngredients());
+        pizza.setImage(pizzaData.getImage());
+        pizza.setPrice(pizzaData.getPrice());
 
         logger.info("Update pizza {}/{}", pizzaData.getId(), pizzaData.getName());
-        return pizzaRepository.save(pizzaData);
+        return pizzaRepository.save(pizza);
     }
 
     public List<Pizza> findByCafe(Cafe cafe) {
