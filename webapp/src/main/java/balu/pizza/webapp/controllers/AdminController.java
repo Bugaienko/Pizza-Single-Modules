@@ -39,7 +39,7 @@ public class AdminController {
 
     /**
      *
-     * @param userUtil набор утилит
+     * @param userUtil Set of utilities
      * @param typeService Ingredient type service
      * @param ingredientService Ingredient service
      * @param baseService Base of pizza service
@@ -83,6 +83,17 @@ public class AdminController {
         return "admin/index";
     }
 
+
+    /**
+     * Add ingredient page
+     * <p style="text-align:left;">
+     * <img src="doc-files/add_ingr.jpg" style="max-width: 50%;" alt="admin panel">
+     * </p>
+     * @param model
+     * @param ingredient
+     * @param typeIngredient
+     * @return
+     */
     @GetMapping("/add/ingredient")
     public String addIngredient(Model model,
                                 @ModelAttribute("ingredient") Ingredient ingredient,
