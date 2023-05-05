@@ -2,6 +2,7 @@ package balu.pizza.webapp.services;
 
 import balu.pizza.webapp.models.TypeIngredient;
 import balu.pizza.webapp.repositiries.TypesRepository;
+import balu.pizza.webapp.util.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +45,12 @@ public class TypeService {
     }
 
     public TypeIngredient findById(int id) {
-        return typesRepository.findById(id).get();
+        return typesRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Transactional
     public TypeIngredient update(TypeIngredient type) {
-        TypeIngredient typeIngredient = typesRepository.findById(type.getId()).get();
+        TypeIngredient typeIngredient = findById(type.getId());
         typeIngredient.setName(type.getName());
         logger.info("Update TypeIngredient id={}", type.getId());
         return typesRepository.save(typeIngredient);

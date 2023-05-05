@@ -2,6 +2,7 @@ package balu.pizza.webapp.services;
 
 import balu.pizza.webapp.models.Base;
 import balu.pizza.webapp.repositiries.BaseRepository;
+import balu.pizza.webapp.util.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,7 @@ public class BaseService {
     }
 
     public Base findById(int baseId) {
-        return baseRepository.findById(baseId).get();
+        return baseRepository.findById(baseId).orElseThrow(NotFoundException::new);
     }
 
 

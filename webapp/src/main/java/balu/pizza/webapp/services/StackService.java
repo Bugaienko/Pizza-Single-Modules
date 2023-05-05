@@ -24,6 +24,10 @@ public class StackService {
         this.stacksRepository = stacksRepository;
     }
 
+    public StackItem create(StackItem stackItem){
+        return stacksRepository.save(stackItem);
+    }
+
 
     public List<StackItem> findAllSorted(String sortBy){
         return stacksRepository.findAll(Sort.by(sortBy).ascending());

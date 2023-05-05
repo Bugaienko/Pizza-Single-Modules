@@ -27,6 +27,12 @@ public class StackItem {
     public StackItem() {
     }
 
+    public StackItem(String name, String image, int priority) {
+        this.name = name;
+        this.image = image;
+        this.priority = priority;
+    }
+
     public int getId() {
         return id;
     }
@@ -67,5 +73,23 @@ public class StackItem {
                 ", image='" + image + '\'' +
                 ", priority=" + priority +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StackItem stackItem = (StackItem) o;
+
+        if (id != stackItem.id) return false;
+        return name.equals(stackItem.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        return result;
     }
 }
