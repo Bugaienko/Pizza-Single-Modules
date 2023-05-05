@@ -6,7 +6,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
+ * Configuration for displaying user uploaded images
+ *
  * @author Sergii Bugaienko
+ * @since 1.0
  */
 
 @Configuration

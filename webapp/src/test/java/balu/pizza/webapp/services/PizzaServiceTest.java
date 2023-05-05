@@ -279,8 +279,16 @@ class PizzaServiceTest {
         assertEquals(ingredientName, foundedByName.get().getName());
         Optional<Ingredient> foundedByWrongName = ingredientService.findIngredientByName("Wrong Ing name");
         assertFalse(foundedByWrongName.isPresent());
-    }
 
+        Ingredient ingredient1 = foundedByName.orElseThrow(NotFoundException::new);
+        String nameForUpdateTest = "Name for update";
+        ingredient1.setName(nameForUpdateTest);
+        ingredientService.update(ingredient1);
+
+        assertEquals(nameForUpdateTest, ingredient1.getName());
+
+
+    }
 
 
     private Pizza createAndSaveNewPizza(String pizzaName) {

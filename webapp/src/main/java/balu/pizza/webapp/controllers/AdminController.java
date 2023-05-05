@@ -13,6 +13,11 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
+ * Administrator controller
+ * <p>
+ * This functionality is only available to administrators
+ * </p>
+ *
  * @author Sergii Bugaienko
  */
 
@@ -32,6 +37,19 @@ public class AdminController {
     private final BaseValidator baseValidator;
     private final PizzaValidator pizzaValidator;
 
+    /**
+     *
+     * @param userUtil набор утилит
+     * @param typeService Ingredient type service
+     * @param ingredientService Ingredient service
+     * @param baseService Base of pizza service
+     * @param pizzaService Pizza service
+     * @param cafeService Cafe service
+     * @param ingredientValidator Validator for ingredient data entry
+     * @param typeValidator Validator for type ingredient data entry
+     * @param baseValidator Validator for base data entry
+     * @param pizzaValidator Validator for pizza data entry
+     */
     @Autowired
     public AdminController(UserUtil userUtil, TypeService typeService, IngredientService ingredientService, BaseService baseService, PizzaService pizzaService, CafeService cafeService, IngredientValidator ingredientValidator, TypeValidator typeValidator, BaseValidator baseValidator, PizzaValidator pizzaValidator) {
         this.userUtil = userUtil;
@@ -46,6 +64,14 @@ public class AdminController {
         this.pizzaValidator = pizzaValidator;
     }
 
+    /**
+     * Admin Panel
+     *<p style="text-align:center;">
+     * <img src="doc-files/admin.png" style="max-width: 70%;" alt="admin panel">
+     *</p>
+     * @param model
+     * @return generates a page for the route /admin
+     */
     @GetMapping()
     public String indexAdmin(Model model) {
         Person user = userUtil.getActiveUser();

@@ -5,34 +5,51 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
+ * The Entity of the cafe
+ *
  * @author Sergii Bugaienko
+ *
  */
 
 @Entity
 @Table(name = "cafe")
 public class Cafe {
 
+    /** Identifier */
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    /** Name of cafe */
     @Column(name = "title")
     @NotEmpty(message = "Title should be not empty")
     private String title;
 
+    /** Full address */
     @Column(name = "city")
     @NotEmpty(message = "City should be not empty")
     private String city;
+
+    /** Email of cafe */
     @Column(name = "email")
     @NotEmpty(message = "Email should be not empty")
     private String email;
+
+    /** Phone of cafe */
     @Column(name = "phone")
     @NotEmpty(message = "Phone should be not empty")
     private String phone;
+
+    /** Cafe opening time */
     @Column(name = "open_at")
     private String openAt;
+
+    /** Cafe closing time */
     @Column(name = "close_at")
     private String closeAt;
+
+    /** List of pizzas related to the cafe */
     @ManyToMany
     @JoinTable(
             name = "cafe_pizza",
@@ -40,12 +57,28 @@ public class Cafe {
             inverseJoinColumns = @JoinColumn(name = "pizza_id")
     )
     private List<Pizza> pizzas;
+
+    /** Image file name */
     @Column(name = "image")
     private String image;
 
+    /**
+     * Empty class constructor
+     */
     public Cafe() {
     }
 
+
+    /**
+     * Class constructor
+     *
+     * @param title Name of cafe
+     * @param city Full address
+     * @param email Email
+     * @param phone Phone
+     * @param openAt Cafe opening time
+     * @param closeAt Cafe closing time
+     */
     public Cafe(String title, String city, String email, String phone, String openAt, String closeAt) {
         this.title = title;
         this.city = city;
@@ -55,6 +88,10 @@ public class Cafe {
         this.closeAt = closeAt;
     }
 
+    /**
+     *
+     * @return List sorted by price of pizzas related to the cafe
+     */
     public List<Pizza> getSortedPizza(){
         List<Pizza> pizzas = this.pizzas;
         pizzas.sort(((o1, o2) -> {
@@ -64,6 +101,10 @@ public class Cafe {
     }
 
 
+    /**
+     *
+     * @return Identity of cafe
+     */
     public int getId() {
         return id;
     }
@@ -120,6 +161,10 @@ public class Cafe {
         this.closeAt = closeAt;
     }
 
+    /**
+     *
+     * @return List of pizzas related to the cafe
+     */
     public List<Pizza> getPizzas() {
         return pizzas;
     }

@@ -38,10 +38,13 @@ public class BaseService {
     public Base create(Base base) {
         Base newBase = new Base(base.getSize(), base.getName(), base.getPrice());
         //DONE save tp BD
-        logger.info("Add new base {}", newBase.getName());
-        return baseRepository.save(newBase);
+        logger.info("Add new base {}", base.getName());
+        return baseRepository.save(base);
     }
 
+    public List<Base> findAll(){
+        return baseRepository.findAll();
+    }
     public List<Base> findAllSorted() {
         return baseRepository.findAll(Sort.by("size").and(Sort.by("name")));
     }

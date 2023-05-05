@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 /**
+ * Configuration of Spring Security
+ *
  * @author Sergii Bugaienko
  */
 

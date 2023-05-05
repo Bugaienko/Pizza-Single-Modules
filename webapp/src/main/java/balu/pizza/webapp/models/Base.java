@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * @author Sergii Bugaienko
+ *
  */
 
 @Entity
@@ -90,5 +91,30 @@ public class Base {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Base base = (Base) o;
+
+        if (id != base.id) return false;
+        if (Double.compare(base.price, price) != 0) return false;
+        if (!size.equals(base.size)) return false;
+        return name.equals(base.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + size.hashCode();
+        result = 31 * result + name.hashCode();
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }
