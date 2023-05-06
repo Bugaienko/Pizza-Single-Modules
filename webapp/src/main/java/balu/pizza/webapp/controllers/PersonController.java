@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
+ * Users controller
  * @author Sergii Bugaienko
  */
 
@@ -30,6 +31,13 @@ import java.util.List;
     private final PersonValidator personValidator;
     private final PersonService personService;
 
+    /**
+     *
+     * @param userUtil Set users utils
+     * @param pizzaService Pizza service
+     * @param personValidator User data validation
+     * @param personService User service
+     */
     @Autowired
     public PersonController(UserUtil userUtil, PizzaService pizzaService, PersonValidator personValidator, PersonService personService) {
         this.userUtil = userUtil;
@@ -38,6 +46,14 @@ import java.util.List;
         this.personService = personService;
     }
 
+    /**
+     * Personal user area
+     * <p style="text-align:left;">
+     * <img src="doc-files/user.png" style="max-width: 50%;" alt="admin panel">
+     * </p>
+     * @param model
+     * @return Generates a page for the route /user/myPage
+     */
     @GetMapping("/myPage")
     public String userPage(Model model){
         Person user = userUtil.getActiveUser();
@@ -50,6 +66,12 @@ import java.util.List;
 
     }
 
+    /**
+     * Edit user information page
+     * @param person
+     * @param model
+     * @return Generates a page for the route /user/edit
+     */
     @GetMapping("/edit")
     public String changeUserInfo(@ModelAttribute("person") Person person, Model model){
         Person user = userUtil.getActiveUser();
@@ -58,6 +80,15 @@ import java.util.List;
         return "auth/edit";
     }
 
+    /**
+     * Method for validating the information entered by the user
+     *
+     * @param person
+     * @param bindingResult
+     * @param rePassword
+     * @param model
+     * @return In case of successful validation - update the user information in the database
+     */
     @PatchMapping("/edit")
     public String updateUserInfo(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, String rePassword, Model model){
         Person user = userUtil.getActiveUser();

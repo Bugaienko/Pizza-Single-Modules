@@ -7,6 +7,7 @@ import balu.pizza.webapp.services.PersonService;
 import balu.pizza.webapp.services.PizzaService;
 import balu.pizza.webapp.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
+ * Pizza controller
+ *
  * @author Sergii Bugaienko
  */
 
@@ -28,6 +31,13 @@ public class PizzaController {
     private final UserUtil userUtil;
     private final IngredientService ingredientService;
 
+    /**
+     * @param pizzaService      Pizzas service
+     * @param personService     Persons service
+     * @param cafeService       Cafes service
+     * @param userUtil          Set users utils
+     * @param ingredientService Ingredient service
+     */
     @Autowired
     public PizzaController(PizzaService pizzaService, PersonService personService, CafeService cafeService, UserUtil userUtil, IngredientService ingredientService) {
         this.pizzaService = pizzaService;
@@ -37,6 +47,18 @@ public class PizzaController {
         this.ingredientService = ingredientService;
     }
 
+    /**
+     * Cafe menu editing page
+     * Admin only
+     * <p style="text-align:left;">
+     * <img src="doc-files/cafe_addpizza.jpg" style="max-width: 50%;" alt="admin panel">
+     * </p>
+     *
+     * @param cafeId
+     * @param model
+     * @return Generates a page for menu editing
+     */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/add_to_cafe/{id}")
     public String addPizzaToCafeMenu(@PathVariable("id") int cafeId, Model model) {
         model.addAttribute("user", userUtil.getActiveUser());
@@ -48,6 +70,15 @@ public class PizzaController {
         return "pizza/addToCafe";
     }
 
+    /**
+     * The method adds the selected pizza to the cafe menu
+     *
+     * @param cafeId  Cafe ID
+     * @param pizzaId Pizza ID
+     * @param model
+     * @return if successful - redirects to the cafe page
+     */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/add_to_menu/{cafe}/{pizza}")
     public String updateMenu(@PathVariable("cafe") int cafeId, @PathVariable("pizza") int pizzaId,
                              Model model) {
@@ -61,9 +92,17 @@ public class PizzaController {
         return "redirect:/pizza/add_to_cafe/" + cafeId;
     }
 
+    /**
+     * The method deleting the selected pizza from the cafe menu
+     *
+     * @param cafeId  Cafe ID
+     * @param pizzaId Pizza ID
+     * @param model
+     * @return if successful - redirects to the cafe page
+     */
     @GetMapping("/del_from_menu/{cafe}/{pizza}")
     public String deletePizzaFromMenu(@PathVariable("cafe") int cafeId, @PathVariable("pizza") int pizzaId,
-                             Model model) {
+                                      Model model) {
         model.addAttribute("user", userUtil.getActiveUser());
 
         cafeService.delPizzaFromCafe(cafeId, pizzaId);
@@ -74,6 +113,13 @@ public class PizzaController {
         return "redirect:/pizza/add_to_cafe/" + cafeId;
     }
 
+    /**
+     * The method adds the selected pizza to favorites list active user
+     *
+     * @param pizzaId Pizza ID
+     * @param model
+     * @return if successful - redirects to the menu page
+     */
     @GetMapping("/addToFav/{Id}")
     public String addPizzaToPersonFav(@PathVariable("Id") int pizzaId, Model model) {
         Person person = userUtil.getActiveUser();
@@ -85,6 +131,12 @@ public class PizzaController {
         return "redirect:/menu";
     }
 
+    /**
+     * The method deleting the selected pizza from favorites list active user
+     *
+     * @param pizzaId Pizza ID
+     * @return if successful - redirects to the menu page
+     */
     @GetMapping("/removeFromFav/{id}")
     public String removeFromPersonFav(@PathVariable("id") int pizzaId) {
         Person person = userUtil.getActiveUser();
@@ -93,6 +145,17 @@ public class PizzaController {
 
     }
 
+    /**
+     * Page for displaying detailed pizza information
+     *
+     * <p style="text-align:left;">
+     * <img src="doc-files/pizza_info.jpg" style="max-width: 50%;" alt="admin panel">
+     * </p>
+     *
+     * @param pizzaId Pizza ID
+     * @param model
+     * @return
+     */
     @GetMapping("/{id}")
     public String pizzaPage(@PathVariable("id") int pizzaId, Model model) {
         model.addAttribute("user", userUtil.getActiveUser());
@@ -105,6 +168,22 @@ public class PizzaController {
         return "pizza/detail";
     }
 
+    /**
+     * Control and edit pizza price page
+     * Admin only
+     * <p>
+     * The method calculates and displays the cost of the pizza, taking into account its ingredients and size
+     * </p>
+     * <p style="text-align:left;">
+     * <img src="doc-files/check_price.png" style="max-width: 50%;" alt="admin panel">
+     * </p>
+     *
+     * @param pizzaId Pizza ID
+     * @param model
+     * @param price Price
+     * @return
+     */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/checkPrice/{id}")
     public String checkPricePage(@PathVariable("id") int pizzaId, Model model, @ModelAttribute("price") Price price) {
         model.addAttribute("user", userUtil.getActiveUser());
@@ -121,6 +200,13 @@ public class PizzaController {
         return "pizza/checkPrice";
     }
 
+    /**
+     * The method updates the pizza price in the database
+     * @param pizzaId Pizza ID
+     * @param price New price
+     * @return
+     */
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/setPrice/{id}")
     public String setNewPrice(@PathVariable("id") int pizzaId, @ModelAttribute("price") @Valid Price price) {
         Pizza pizza = pizzaService.findById(pizzaId);

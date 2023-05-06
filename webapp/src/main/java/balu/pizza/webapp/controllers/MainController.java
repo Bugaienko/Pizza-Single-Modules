@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
+ * Main controller
+ *
  * @author Sergii Bugaienko
  */
 
@@ -23,6 +25,11 @@ public class MainController {
     private final UserUtil userUtil;
 
 
+    /**
+     * @param cafeService  Cafes service
+     * @param pizzaService Pizzas service
+     * @param userUtil     Set users utils
+     */
     @Autowired
     public MainController(CafeService cafeService, PizzaService pizzaService, UserUtil userUtil) {
         this.cafeService = cafeService;
@@ -30,6 +37,12 @@ public class MainController {
         this.userUtil = userUtil;
     }
 
+    /**
+     * Home page
+     *
+     * @param model
+     * @return Generates a page for the route /
+     */
     @GetMapping("/")
     public String mainPage(Model model) {
         Person user = userUtil.getActiveUser();
@@ -38,6 +51,15 @@ public class MainController {
         return "main/index";
     }
 
+    /**
+     * Menu page
+     * <p style="text-align:left;">
+     * <img src="doc-files/page_menu.jpg" style="max-width: 50%;" alt="admin panel">
+     * </p>
+     *
+     * @param model
+     * @return Generates a page for the route /menu
+     */
     @GetMapping("/menu")
     public String menuPage(Model model) {
         Person user = userUtil.getActiveUser();
@@ -50,14 +72,14 @@ public class MainController {
     }
 
     @GetMapping("/about")
-    public String aboutPage(Model model) {
+    private String aboutPage(Model model) {
         Person user = userUtil.getActiveUser();
         model.addAttribute("user", user);
         return "main/about";
     }
 
     @GetMapping("/contact")
-    public String contactPage(Model model) {
+    private String contactPage(Model model) {
         Person user = userUtil.getActiveUser();
         model.addAttribute("user", user);
         return "main/contact";
