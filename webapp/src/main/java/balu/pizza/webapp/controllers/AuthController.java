@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.UUID;
 
 /**
+ * Public route controller for user authentication and authorization
+ *
  * @author Sergii Bugaienko
  */
 
@@ -36,6 +38,12 @@ public class AuthController {
     @Value("${upload.path}")
     private String uploadPath;
 
+    /**
+     *
+     * @param personValidator Validator for user data entry
+     * @param personService Users service
+     * @param userUtil Set of utilities
+     */
     @Autowired
     public AuthController(PersonValidator personValidator, PersonService personService, UserUtil userUtil) {
         this.personValidator = personValidator;
@@ -44,50 +52,37 @@ public class AuthController {
     }
 
 
+    /**
+     * Page with user authorization form
+     *
+     * @return generates a page for the route /auth/login
+     */
     @GetMapping("/login")
     public String loginPage() {
         return "auth/login";
     }
 
+    /**
+     * Page with user registration form <strong>without</strong> user avatar uploading
+     * @param person user entity
+     * @return generates a page for the route /auth/registration
+     */
     @GetMapping("/registration")
     public String registrationPage(@ModelAttribute("person") Person person) {
 
         return "auth/registration";
     }
 
+    /**
+     * Validation user data. If successful save user to database
+     * @param person
+     * @param bindingResult
+     * @param rePassword
+     * @return If successful redirect to login page
+     */
     @PostMapping("/registration")
     public String createPerson(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, String rePassword) {
-//    public String createPerson(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, @RequestParam("file") MultipartFile avatar, String rePassword) {
-//        if (avatar != null) {
-//
-//
-////            String uuidFile = UUID.randomUUID().toString();
-////            String resultFileName = uuidFile + "-" + avatar.getOriginalFilename();
-//            String fileName = avatar.getOriginalFilename();
-//
-//            person.setAvatar(fileName);
-//
-//            personValidator.validate(person, bindingResult);
-//            personValidator.validate(person, rePassword, bindingResult);
-//
-//            if (bindingResult.hasErrors()) {
-//                return "auth/registration";
-//            }
-//
-//            Person person1 = personService.register(person);
-//            File uploadDir = new File(uploadPath + "/images/user/" + person1.getId());
-//            if (!uploadDir.exists()) {
-//                uploadDir.mkdir();
-//            }
-////            System.out.println(uploadDir);
-//            try {
-//                avatar.transferTo(new File(uploadDir + "/" + fileName));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        else {
-//        System.out.println(person);
+
             personValidator.validate(person, bindingResult);
             personValidator.validate(person, rePassword, bindingResult);
 
@@ -103,18 +98,35 @@ public class AuthController {
     }
 
 
-
+    /**
+     * Generating the unlogin page
+     * @param model
+     * @return generates a page for the route /auth/exit
+     */
     @GetMapping("/exit")
     public String confirmLogout(Model model) {
 
         return "auth/exit";
     }
 
+    /**
+     * Page with user registration form <strong>with</strong> user avatar uploading
+     * @param person
+     * @return generates a page for the route /auth/signupImg
+     */
     @GetMapping("/signupImg")
-    public String loadImage(@ModelAttribute("person") Person person){
+    public String registrationWithImage(@ModelAttribute("person") Person person){
         return "auth/loadImage";
     }
 
+    /**
+     * Validation user data. If successful save user to database
+     * @param person
+     * @param bindingResult
+     * @param rePassword
+     * @param avatar
+     * @return If successful redirect to login page
+     */
     @PostMapping("/signupImg")
     public String createUserWithAvatar(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult, String rePassword, @RequestParam("file") MultipartFile avatar){
         System.out.println("Auth contr -> post signup");

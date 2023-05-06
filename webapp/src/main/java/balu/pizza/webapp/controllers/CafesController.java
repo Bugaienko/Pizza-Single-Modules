@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 /**
+ * Cafe Controller
  * @author Sergii Bugaienko
  */
 
@@ -27,6 +28,12 @@ public class CafesController {
     private final CafeService cafeService;
     private final UserUtil userUtil;
 
+    /**
+     *
+     * @param pizzaService Pizza service
+     * @param cafeService Cafe service
+     * @param userUtil Set users utils
+     */
     @Autowired
     public CafesController(PizzaService pizzaService, CafeService cafeService, UserUtil userUtil) {
         this.pizzaService = pizzaService;
@@ -34,6 +41,15 @@ public class CafesController {
         this.userUtil = userUtil;
     }
 
+    /**
+     * Main page cafe section
+     * <p style="text-align:left;">
+     * <img src="doc-files/cafe.png" style="max-width: 50%;" alt="admin panel">
+     * </p>
+     *
+     * @param model
+     * @return Generates a page for the route /cafe
+     */
     @GetMapping()
     public String indexPage(Model model){
         model.addAttribute("user", userUtil.getActiveUser());
@@ -41,6 +57,15 @@ public class CafesController {
         return "cafe/cafes";
     }
 
+    /**
+     * The page displays the presence of pizza in the cafe menu
+     * <p style="text-align:left;">
+     * <img src="doc-files/cafe_pizza.png" style="max-width: 50%;" alt="admin panel">
+     * </p>
+     * @param pizzaId
+     * @param model
+     * @return Generates a page for the route /cafe/pizza/id
+     */
     @GetMapping("/pizza/{pizzaId}")
     public String pizzaAvailability(@PathVariable("pizzaId") int pizzaId, Model model) {
         Person user = userUtil.getActiveUser();
@@ -53,6 +78,15 @@ public class CafesController {
         return "cafe/pizzaSearch";
     }
 
+    /**
+     * Page displaying information about the cafe and its menu
+     * <p style="text-align:left;">
+     * <img src="doc-files/add_base.jpg" style="max-width: 50%;" alt="admin panel">
+     * </p>
+     * @param cafeId cafe identifier
+     * @param model
+     * @return Generates a page for the route /cafe/id
+     */
     @GetMapping("/{id}")
     public String showCafe(@PathVariable("id") int cafeId, Model model){
         model.addAttribute("user", userUtil.getActiveUser());

@@ -1,7 +1,6 @@
 balu.pizza.webapp
 balu.pizza.webapp.config
 balu.pizza.webapp.controllers
-balu.pizza.webapp.dto
 balu.pizza.webapp.models
 balu.pizza.webapp.repositiries
 balu.pizza.webapp.security
