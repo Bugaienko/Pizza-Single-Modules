@@ -3,6 +3,7 @@ package balu.pizza.webapp.models;
 import javax.persistence.*;
 
 /**
+ * Entity for storing and displaying a stack of project technologies
  * @author Sergii Bugaienko
  */
 

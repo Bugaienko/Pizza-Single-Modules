@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * The Entity of the Ingredient
+ * Ingredients included in the pizza
+ *
  * @author Sergii Bugaienko
  */
 
@@ -38,6 +41,11 @@ public class Ingredient {
     public Ingredient() {
     }
 
+    /**
+     *
+     * @param name Name of the ingredient
+     * @param price Price of the ingredient
+     */
     public Ingredient(String name, Double price) {
         this.name = name;
         this.price = price;

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 /**
+ * PersonDetail Service
  * @author Sergii Bugaienko
  */
 
@@ -27,6 +28,12 @@ public class PersonDetailService implements UserDetailsService {
         this.personDetailRepository = personDetailRepository;
     }
 
+    /**
+     * Searches User by Username
+     * @param username
+     * @return UserDetails entity
+     * @throws UsernameNotFoundException if user was not found
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Person> person = personDetailRepository.findByUsername(username);

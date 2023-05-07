@@ -7,6 +7,9 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
+ * Pizza Entity
+ * Pizza consists of entities: Base + list of Ingredients
+ *
  * @author Sergii Bugaienko
  */
 
@@ -50,6 +53,11 @@ public class Pizza {
     public Pizza() {
     }
 
+    /**
+     *
+     * @param name Pizza name
+     * @param price Pizza price
+     */
     public Pizza(String name, double price) {
         this.name = name;
         this.price = price;

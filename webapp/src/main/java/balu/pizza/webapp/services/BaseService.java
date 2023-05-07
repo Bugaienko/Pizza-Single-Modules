@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Service layer of the project for the Base entity
+ *
  * @author Sergii Bugaienko
  */
 
@@ -25,15 +27,29 @@ public class BaseService {
 
     private final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
+    /**
+     * Implementing the repository layer to interact with the database
+     * @param baseRepository Base Repository
+     */
     @Autowired
     public BaseService(BaseRepository baseRepository) {
         this.baseRepository = baseRepository;
     }
 
+    /**
+     * Base search method by name
+     * @param name
+     * @return An object that may contain a Base or be empty
+     */
     public Optional<Base> findByName(String name) {
         return baseRepository.findByName(name);
     }
 
+    /**
+     * Create new Base
+     * @param base
+     * @return new Base from DB
+     */
     @Transactional
     public Base create(Base base) {
         Base newBase = new Base(base.getSize(), base.getName(), base.getPrice());
@@ -42,18 +58,37 @@ public class BaseService {
         return baseRepository.save(base);
     }
 
+    /**
+     *
+     * @return List of all Bases from DB
+     */
     public List<Base> findAll(){
         return baseRepository.findAll();
     }
+
+    /**
+     *
+     * @return Sorted by name list of all Bases from DB
+     */
     public List<Base> findAllSorted() {
         return baseRepository.findAll(Sort.by("size").and(Sort.by("name")));
     }
 
+    /**
+     * Find base by ID
+     * @param baseId
+     * @return Base or throw NotFoundException
+     */
     public Base findById(int baseId) {
         return baseRepository.findById(baseId).orElseThrow(NotFoundException::new);
     }
 
 
+    /**
+     * Update Base in DB
+     * @param base
+     * @return updated Base
+     */
     @Transactional
     public Base update(Base base) {
         logger.info("Update base {}", base.getId() + "/" + base.getName());

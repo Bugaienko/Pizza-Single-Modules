@@ -12647,3 +12647,7 @@ p.balu-yellow{
     /*border-radius: 10px;*/
     height: 100%;
 }
+.img-scheme {
+    max-width: 85%;
+    height: auto;
+}

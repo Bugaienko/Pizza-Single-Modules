@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
+ * Cafe Service
  * @author Sergii Bugaienko
  */
 
@@ -26,30 +27,58 @@ public class CafeService {
 
     private final Logger logger = LoggerFactory.getLogger(CafeService.class);
 
+    /**
+     *
+     * @param cafeRepository Cafe Repository
+     * @param pizzaRepository Pizza Repository
+     */
     @Autowired
     public CafeService(CafeRepository cafeRepository, PizzaRepository pizzaRepository) {
         this.cafeRepository = cafeRepository;
         this.pizzaRepository = pizzaRepository;
     }
 
+    /**
+     * Find Cafe by ID
+     * @param id
+     * @return Cafe or throw NotFoundException
+     */
     public Cafe findById(int id){
         return cafeRepository.findById(id).orElseThrow(NotFoundException::new);
     }
 
+    /**
+     *
+     * @return List of all cafes from DB
+     */
     public List<Cafe> findAll(){
         return cafeRepository.findAll();
     }
 
 
+    /**
+     * Save new Cafe to DB
+     * @param cafe
+     * @return saved cafe
+     */
     @Transactional
     public Cafe create(Cafe cafe) {
         return cafeRepository.save(cafe);
     }
 
+    /**
+     *
+     * @return Sorted by title list of all cafes from DB
+     */
     public List<Cafe> findAllSorted() {
         return cafeRepository.findAll(Sort.by("city").and(Sort.by("title")));
     }
 
+    /**
+     * Update cafe ib DB
+     * @param cafe
+     * @return updated cafe
+     */
     @Transactional
     public Cafe update(Cafe cafe) {
         Cafe cafe1 = cafeRepository.save(cafe);
@@ -57,6 +86,11 @@ public class CafeService {
         return cafe1;
     }
 
+    /**
+     * Adds pizza to the cafe menu
+     * @param cafeId Cafe id
+     * @param pizzaId Pizza id
+     */
     @Transactional
     public void addPizzaToCafe(int cafeId, int pizzaId) {
         Pizza pizza = pizzaRepository.findById(pizzaId).orElseThrow(NotFoundException::new);
@@ -73,6 +107,11 @@ public class CafeService {
         logger.info("Add pizza id{} to Cafe id{}", pizza.getId(), cafe.getId());
     }
 
+    /**
+     * Remove pizza from cafe manu
+     * @param cafeId cafe ID
+     * @param pizzaId pizza ID
+     */
     @Transactional
     public void delPizzaFromCafe(int cafeId, int pizzaId) {
         Pizza pizza = pizzaRepository.findById(pizzaId).orElseThrow(NotFoundException::new);

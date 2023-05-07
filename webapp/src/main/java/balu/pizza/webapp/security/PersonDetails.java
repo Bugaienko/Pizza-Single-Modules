@@ -9,6 +9,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
+ * A class required for Spring Security authorization to work correctly
+ *
  * @author Sergii Bugaienko
  */
 

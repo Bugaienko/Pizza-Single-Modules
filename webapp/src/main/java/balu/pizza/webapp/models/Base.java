@@ -7,6 +7,10 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
+ * Base entity
+ *
+ * Determines the base of the pizza: its size and type of dough
+ *
  * @author Sergii Bugaienko
  *
  */
@@ -37,16 +41,30 @@ public class Base {
     }
 
 
+    /**
+     *
+     * @param size pizza/base size
+     * @param name base name
+     * @param price base price
+     */
     public Base(String size, String name, double price) {
         this.size = size;
         this.name = name;
         this.price = price;
     }
 
+    /**
+     * Get a list of pizzas
+     * @return List of pizzas that include this base
+     */
     public List<Pizza> getPizzas() {
         return pizzas;
     }
 
+    /**
+     * Set a list of pizzas
+     * @param pizzas list of pizzas
+     */
     public void setPizzas(List<Pizza> pizzas) {
         this.pizzas = pizzas;
     }

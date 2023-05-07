@@ -7,6 +7,11 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
+ * Entity of the ingredient type
+ *
+ * Each ingredient has its own type.
+ * For example Vegetables, Sauces, Seafood, etc.
+ *
  * @author Sergii Bugaienko
  */
 

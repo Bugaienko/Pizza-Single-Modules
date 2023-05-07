@@ -162,7 +162,7 @@ public class Cafe {
     }
 
     /**
-     *
+     * Get list of pizzas
      * @return List of pizzas related to the cafe
      */
     public List<Pizza> getPizzas() {

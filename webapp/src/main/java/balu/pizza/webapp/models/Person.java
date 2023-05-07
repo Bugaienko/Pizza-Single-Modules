@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * Entity user
  * @author Sergii Bugaienko
  */
 
@@ -56,6 +57,13 @@ public class Person {
         this.email = email;
     }
 
+    /**
+     *
+     * @param username Username
+     * @param password Password
+     * @param email Email
+     * @param avatar Image
+     */
     public Person(String username, String password, String email, String avatar) {
         this.username = username;
         this.password = password;
@@ -64,6 +72,10 @@ public class Person {
     }
 
 
+    /**
+     * Get list of pizzas
+     * @return Sorted by price list of pizzas that the user added to favorites
+     */
     public List<Pizza> getSortedPizza(){
         List<Pizza> pizzas = this.favorites;
         pizzas.sort(((o1, o2) -> {
@@ -120,6 +132,10 @@ public class Person {
         this.avatar = avatar;
     }
 
+    /**
+     * Get favorites list of pizzas
+     * @return List of pizzas that the user added to favorites
+     */
     public List<Pizza> getFavorites() {
         if (favorites == null) {
             this.favorites = new ArrayList<>();
@@ -166,8 +182,4 @@ public class Person {
         return result;
     }
 
-    //    public static List<Pizza> deleteDublicates(List<Pizza> pizzas) {
-//        Set<Pizza> set = new LinkedHashSet<>(pizzas);
-//        return new ArrayList<>(set);
-//    }
 }
