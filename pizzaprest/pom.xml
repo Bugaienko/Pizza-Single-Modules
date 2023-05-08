@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>balu.pizzaRest</groupId>
-    <artifactId>pizzaproject</artifactId>
+    <artifactId>pizzarest</artifactId>
     <version>0.0.5</version>
-    <name>pizzaproject</name>
-    <description>pizzaproject</description>
+    <name>pizzarest</name>
+    <description>pizzarest</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
