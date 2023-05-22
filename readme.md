@@ -23,11 +23,12 @@
 * Menu of a cafe 
 * Which café's menu has a specific pizza 
 * Form a list of your favorite pizzas (*add, remove from the list, see the list in your personal cabinet*)
+* When registering, upload an image of your avatar
 
 ### A user with administrator status can:
 * All functions of an authorized user + 
 * Create a new pizza
-* Edit pizza menu 
+* Edit pizza content 
 * Edit pizza price 
 * Edit or create a new ingredient 
 * Edit or create a new pizza base (*the entity determining the size and type of the pizza dough*)
