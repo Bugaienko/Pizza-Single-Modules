@@ -9,6 +9,33 @@
 #### The entities and their relationships are depicted in the diagram below
 ![Scheme](diagram.png)
 
+### An unauthorized user can:
+* View general menu 
+* See list of cafes 
+* Menu of a cafe
+* Sign up 
+* Sign in
+
+### An authorized user can:
+* View general menu 
+* See list of cafes 
+* View the composition of each pizza 
+* Menu of a cafe 
+* Which café's menu has a specific pizza 
+* Form a list of your favorite pizzas (*add, remove from the list, see the list in your personal cabinet*)
+
+### A user with administrator status can:
+* All functions of an authorized user + 
+* Create a new pizza
+* Edit pizza menu 
+* Edit pizza price 
+* Edit or create a new ingredient 
+* Edit or create a new pizza base (*the entity determining the size and type of the pizza dough*)
+* Edit cafe menu (*remove/add pizzas*)
+* Edit or add a new ingredient type (*for example tomatoes have a "vegetable" type*)
+* Add a new cafe or edit information about an existing one
+
+
 ### The following tools and techniques were used in the project:
 * JAVA
 * Spring BOOT
