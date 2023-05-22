@@ -1,10 +1,12 @@
-# A pat-project for a pizzeria chain website with the possibility of administration
+# A pet-project for a pizzeria chain website with the possibility of administration
 
 ## Implemented web-presentation for visitors and administrator.
 ## Also implemented REST API. The availability of the methods is limited depending on the status of the authorized user (user or admin).
 
 ### The working version of the project is [available at](http://serg-bug.info/)
 ### Full [documentation](https://bugaienko.github.io/javaDocsForPizza/) is available here 
+
+___
 
 #### The entities and their relationships are depicted in the diagram below
 ![Scheme](diagram.png)
@@ -36,6 +38,7 @@
 * Edit or add a new ingredient type (*for example tomatoes have a "vegetable" type*)
 * Add a new cafe or edit information about an existing one
 
+___
 
 ### The following tools and techniques were used in the project:
 * JAVA
