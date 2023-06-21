@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  webapp:
+    build: ./web
+    container_name: pizza-web
+    restart: unless-stopped
+    command: java -jar app.jar
+    volumes:
+      - ./uploads:/uploads
+      - ./logs:/log/prod
+      #- ./imgapp:/root/uploads
+      #- ./uploads:/root/uploads
+    ports:
+      - 8080:8090
+    networks:
+      - pizza-net
+    
+    
+  restapi:
+    build: ./api
+    container_name: pizza-api
+    restart: unless-stopped
+    command: java -jar app.jar
+    volumes:
+      - ./logs:/log/rest
+    ports:
+      - 8090:8099
+    networks:
+      - pizza-net
+      
+  nginx:
+    #image: nginx:1.13
+    image: nginx:stable-alpine
+    container_name: pizza-nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      #- ./nginx/vhost.d:/etc/nginx/vhost.d:ro
+      #- ./nginx/nginx.conf.prod:/etc/nginx/conf.d/nginx.conf
+    depends_on:
+      - webapp
+      - restapi
+    networks:
+      - pizza-net
+      
+networks:
+  pizza-net:
+    driver: bridge
+    
