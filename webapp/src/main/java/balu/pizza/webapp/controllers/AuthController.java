@@ -151,8 +151,12 @@ public class AuthController {
         System.out.println(resultFileName);
 
         try {
+            logger.info("uploadPath: " + uploadPath);
+            logger.info("resultFileName: " + resultFileName);
             avatar.transferTo(new File(uploadPath + "/" + resultFileName));
+            logger.info("Image saved: {}", uploadPath + "/" + resultFileName);
         } catch (IOException e) {
+            logger.error("Failed to save image: {}", e.getMessage());
             e.printStackTrace();
         }
         person.setAvatar(resultFileName);
