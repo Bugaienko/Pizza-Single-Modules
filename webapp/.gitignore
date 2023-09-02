@@ -1,9 +1,13 @@
 HELP.md
+db_dump/
+pizza_db.sql
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 *.yaml
+.env
+*.env
 
 ### STS ###
 .apt_generated

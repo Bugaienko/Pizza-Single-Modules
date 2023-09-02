@@ -54,3 +54,4 @@ hs_err_pid*
 replay_pid*
 HelloHibernate/src/main/resources/hibernate.cfg.xml
 *.yaml
+webapp/.env
